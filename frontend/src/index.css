@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark , .dark *));
+/* Định nghĩa màu sắc cho chế độ sáng */
+
+html,body{
+  margin :0;
+  padding :0;
+  font-family: "Space Grotesk", sans-serif;
+}

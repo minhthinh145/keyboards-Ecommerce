@@ -1,0 +1,24 @@
+export const Hero = () => {
+    return (
+        <div className="relative h-[600px] overflow-hidden">
+            <img 
+              src="https://images.unsplash.com/photo-1587829741301-dc798b83add3"
+              alt="Hero Image"
+              className="w-full h-full opacity-90 object-cover"
+            />
+            <div className="absolute inset-0  bg-black/50 flex items-center justify-center">
+                <div className="text-center text-white p-4">
+                    <h1 className="text-4xl md:text-6xl font-bold mb-4">
+                        Welcome to Our Store
+                    </h1>
+                    <p className="text-xl md:text-2xl mb-8">
+                       Premium mechanical keyboards for every type of user
+                    </p>
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300">
+                        Shop Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
