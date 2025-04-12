@@ -5,6 +5,8 @@ import {Header} from "./components/Header.jsx";
 import { Hero } from "./components/Hero.jsx";
 import { FeaturedProducts } from './components/FeaturedProducts.jsx';
 import { ThemeProvider } from "./contexts/Themecontext.jsx";
+import { Catogories } from './components/Categories.jsx';
+import { Footer } from './components/Footer.jsx';
 import "./index.css";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -43,8 +45,10 @@ function App() {
   ];
 
   const categories = [
+    { name: "Mechanical", icon: "⌨️" },
     { name: "Gaming", icon: "🎮" },
-    { name: "Office", icon: "💼" },
+    { name: "Wireless", icon: "📡" },
+    { name: "Ergonomic", icon: "🔋" }
   ];
   const toggleDarkMode = () => {
     console.log("Dark mode toggled");
@@ -64,7 +68,11 @@ function App() {
         />
         <Hero />
         <FeaturedProducts products={products} />
+        <Catogories
+          categories={categories}
+        />
       </div>
+      <Footer />
     </ThemeProvider>
   </>;
 }
