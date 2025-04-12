@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 
 export const FeaturedProducts = ({ products }) => {
     return (
@@ -12,11 +14,13 @@ export const FeaturedProducts = ({ products }) => {
                     key = {product.id}
                     className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105"
                 >
+                    <Link to="/product">
                     <img 
                         src={product.image}
                         alt={product.name}
                         className="w-full h-48 object-cover"
                     />
+                    </Link>
                     <div className="p-4">
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mt-4">
                             {product.name}

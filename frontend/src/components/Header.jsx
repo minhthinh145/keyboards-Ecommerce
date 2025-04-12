@@ -1,6 +1,8 @@
 import { useState } from "react";
 import {  FiShoppingCart, FiX, FiMenu } from "react-icons/fi";
 import {DarkModeToggler} from "./button/DarkModeToggler.jsx";
+import { ProductsDetails } from "./pages/ProductDetails.jsx";
+import { Router } from "react-router-dom";
 export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
   const darkMode = true;
 
@@ -28,6 +30,7 @@ export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
                         </div>
                       </div>
                     </div>
+
                           <div className="flex items-center space-x-4">
                             <DarkModeToggler />
                     <div className="relative">

@@ -1,12 +1,14 @@
 
 import { useState } from 'react';
 import"./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {Header} from "./components/Header.jsx";
 import { Hero } from "./components/Hero.jsx";
 import { FeaturedProducts } from './components/FeaturedProducts.jsx';
 import { ThemeProvider } from "./contexts/Themecontext.jsx";
 import { Catogories } from './components/Categories.jsx';
 import { Footer } from './components/Footer.jsx';
+import { ProductsDetails } from "./components/pages/ProductDetails.jsx";
 import "./index.css";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -57,7 +59,8 @@ function App() {
   };
 
   return <>
-  <ThemeProvider>
+  <Router>
+    <ThemeProvider>
        <div className={`min-h-screen ${isDarkMode ? "dark" : ""} bg-white dark:bg-gray-900 transition-colors dark:text-white duration-300`}>
         <Header
           isDarkMode={isDarkMode}
@@ -66,14 +69,24 @@ function App() {
           setIsMenuOpen={setIsMenuOpen}
           cartCount={cartCount}
         />
-        <Hero />
-        <FeaturedProducts products={products} />
-        <Catogories
-          categories={categories}
-        />
+        
+        <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Hero />
+                  <FeaturedProducts products={products} />
+                  <Catogories categories={categories} />
+                </>
+              }
+            />
+            <Route path="/product" element={<ProductsDetails />} />
+          </Routes>
       </div>
       <Footer />
-    </ThemeProvider>
+      </ThemeProvider>
+    </Router>
   </>;
 }
 
