@@ -1,6 +1,7 @@
 import { useState } from "react";
-import {  FiShoppingCart, FiX, FiMenu } from "react-icons/fi";
+import {  FiShoppingCart, FiX, FiMenu , FiUser } from "react-icons/fi";
 import {DarkModeToggler} from "./button/DarkModeToggler.jsx";
+
 import { ProductsDetails } from "./pages/ProductDetails.jsx";
 import { Router } from "react-router-dom";
 export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
@@ -31,9 +32,12 @@ export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
                       </div>
                     </div>
 
-                          <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-4">
+                    <div className="relative hover:bg-zinc-300 dark:hover:bg-zinc-700 p-2 rounded-full transform hover:scale-[1.02] transition duration-200">
+                    <FiUser className="h-6 w-6" />
+                      </div>
                             <DarkModeToggler />
-                    <div className="relative">
+                    <div className="relative hover:bg-gray-200 p-2 rounded-full hover:scale-[1.02] transform">
                       <FiShoppingCart className="h-6 w-6" />
                       <span className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs">
                         {cartCount}

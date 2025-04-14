@@ -1,9 +1,11 @@
 
-//import sone icons from react-icons
 import React from 'react';
-import { FiStar , FiCheckCircle , FiShoppingCart , FiHeart } from 'react-icons/fi';
-import { useState } from 'react';
-
+import { FiStar , FiCheckCircle , FiShoppingCart , FiTruck, FiArrowDown, FiChevronDown} from 'react-icons/fi';
+import { useState , useEffect} from 'react';
+import { HiOutlineUserCircle } from 'react-icons/hi'
+import { IoIosRefresh } from "react-icons/io";
+import { useParams } from 'react-router-dom';
+import { getProductById } from '../../api/products.js';
 export const ProductsDetails = () => {
     const [selectedColor, setSelectedColor] = useState(null);
     const colorOptions = {
@@ -12,23 +14,55 @@ export const ProductsDetails = () => {
         Pink: 'bg-pink-500',
         Blue: 'bg-blue-500',
       };
-    
+      
       const [quantity , setQuantity] = useState(1);
 
       const incrementQuantity = () => setQuantity(q => q + 1) ;
       const decrementQuantity = () => setQuantity(q => Math.max(1,q-1));
+    {/* Call api */}
+    const { id } = useParams();
+    const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true); // Xử lý loading
+    const [error, setError] = useState(null); // Xử lý lỗi
+  
+    useEffect(() => {
+        setLoading(true);  // Bắt đầu loading khi bắt đầu gọi API
+        getProductById(id)
+            .then(data => {
+            setProduct(data);
+            setLoading(false); // Dữ liệu đã nhận xong, tắt loading
+            })
+            .catch(err => {
+            console.error(err);
+            setError('Đã có lỗi xảy ra khi tải dữ liệu');
+            setLoading(false); // Nếu lỗi, tắt loading
+            });
+        }, [id]);
+    
+        if (loading) {
+        return <p>Đang tải sản phẩm...</p>; // Hiển thị loading
+        }
+    
+        if (error) {
+        return <p>{error}</p>; // Hiển thị lỗi nếu có
+        }
+    
+        if (!product) {
+        return <p>Sản phẩm không tồn tại</p>; // Nếu không có sản phẩm, trả về thông báo
+        }
 
 
-
+    // TODO: Replace hardcoded product information (e.g., image URL, price, description, features, etc.)
+    // with dynamic data from the `product` object fetched from the API.
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 py-16 ml-8 mr-8">
 
-            <div className="flex items-center justify-center  bg-gray-200 rounded-lg ">
+            <div className="bg-gray-200 rounded-lg inline-block self-start px-2 py-2">
                 <div className="flex justify-center items-center">
                 <img 
                     src="https://images.unsplash.com/photo-1587829741301-dc798b83add3"
                     alt="Product"
-                    className="object-cover w-full h-full rounded-lg shadow-md px-4 py-4"
+                    className="object-cover w-full h-full "
                 />
                 </div>
             </div>
@@ -36,7 +70,7 @@ export const ProductsDetails = () => {
             {/* Product Details */}
             <div className="flex flex-col gap-4">
                 <div>
-                    <h3 className="font-bold text-3xl"> Bàn phím siêu ngu</h3>
+                    <h3 className="font-bold text-3xl"> {product.name}</h3>
                 </div>
                 <div>
                     <div className="flex items-center gap-2">
@@ -102,7 +136,7 @@ export const ProductsDetails = () => {
                 </div>
 
                 {/* Add to Cart*/}
-                <div className='mb-8'>
+                <div className='mb-4'>
                     
                     {/* Ajdustment quantity */}
                     <div className='flex items-center space-x-4'>
@@ -121,24 +155,69 @@ export const ProductsDetails = () => {
                             </button>
                         </div>
                         
-                        {/* Add to Wishlist */}
+                        {/* Add to Cart */}
                         <button className='flex items-center gap-2 bg-indigo-700 text-white px-2 py-2 rounded-full duration-200
                          hover:bg-indigo-800 hover:shadow-lg hover:scale-[1.02] transform'>
                             <FiShoppingCart className='text-2xl transition mr-2'/>
                             Add to Cart
                         </button>
                         
-                        {/* Note this is favorite and share */}
-                        <button className='flex items-center gap-2 bg-indigo-700 text-white px-2 py-2 rounded-full duration-200
-                            hover:bg-indigo-800 hover:shadow-lg hover:scale-[1.02] transform'>
-                                <FiHeart className='text-2xl transition mr-2'/>
-                                Add to Wishlist
+                        {/* Wishlist (Optional) because it's doesn't exit on database.*/}
+                        {/*
+                                      <button className='group flex items-center gap-2 border border-black  bg-indigo-700 hover:bg-indigo-800 px-2 py-2 rounded-full duration-200
+                                hover:shadow-lg hover:scale-[1.02] transform'>
+                            <AiFillHeart className='text-2xl transition text-white group-hover:text-pink-500' />
                         </button>
+                        */}
+        
+                    </div>
+                </div>  
 
+                <div className='flex flex-wrap gap-x-4'>
 
+                     <div className='flex items-center text-md'>
+                        <span className='text-indigo-700 mr-2 '><FiTruck className='' /></span>
+                        <span>Free shipping over $25</span>
+                     </div>
+
+                     <div className='flex items-center text-md'>
+                        <span className='text-indigo-700 mr-2'><IoIosRefresh className='' /></span>
+                        <span>30-day returns</span>
+                     </div>
+
+                     <div className='flex items-center text-md'>
+                        <span className='text-indigo-700 mr-2'><HiOutlineUserCircle className='' /></span>
+                        <span>24/7 customer support</span>
+                     </div>
+
+                </div>
+                {/* Information ab shipping and return */}
+                <details className='group mb-4 border-b border-gray-200 pb-4'>
+                    <summary className='flex justify-between items-center font-medium cursor-pointer list-none'> 
+                            <span>Shipping information</span>
+                            <span className='group-open:rotate-180 transition-transform duration-200'><FiChevronDown /></span>
+                    </summary> 
+                    <div className='mt-3 text-gray-600'>
+                            <p>
+                                Immediate delivery within Ho Chi Minh City (3 - 4 hours), 1-5 days for areas outside Ho Chi Minh City.
+                            </p>
                     </div>
 
-                </div>  
+                  
+                </details>
+                <details className='group mb-4 border-b border-gray-200 pb-4'>
+                <summary className='flex justify-between items-center font-medium cursor-pointer list-none'>
+                        <span>Return Policy</span>
+                        <span className='group-open:rotate-180 transition-transform duration-200'><FiChevronDown /></span>
+                    </summary>
+                    <div className='mt-3 text-gray-600'>
+                        <p >
+                            You can return the product within 30 days of purchase. The product must be in its original condition and packaging.
+                        </p>
+                    </div>
+                </details>
+
+
             </div>
         </div>
     );
