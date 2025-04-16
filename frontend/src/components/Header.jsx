@@ -1,12 +1,18 @@
 import { useState } from "react";
 import {  FiShoppingCart, FiX, FiMenu , FiUser } from "react-icons/fi";
 import {DarkModeToggler} from "./button/DarkModeToggler.jsx";
-
+import { Link } from "react-router-dom";
 import { ProductsDetails } from "./pages/ProductDetails.jsx";
 import { Router } from "react-router-dom";
 export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
   const darkMode = true;
-
+  const navItems = [
+    { name: "Trang chủ", href: "/" },
+    { name: "Danh sách sản phẩm", href: "/products" },
+    { name: "Danh mục", href: "/categories" },
+  //  { name: "About", href: "/about" },
+    { name: "Liên hệ", href: "/contact" },
+  ];
   return (
           <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900  shadow-md">
              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
@@ -19,14 +25,14 @@ export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
                         />
                         <div className="hidden md:block ml-10">
                           <div className="flex items-baseline space-x-4">
-                            {["Home", "Products", "Categories", "About", "Contact"].map((item) => (
-                              <a
-                                key={item}
-                                href="#"
+                           {navItems.map((item) => (
+                              <Link
+                                key={item.name}
+                                to={item.href}
                                 className="text-gray-700 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium"
                               >
-                                {item}
-                              </a>
+                                {item.name}
+                              </Link>
                             ))}
                         </div>
                       </div>

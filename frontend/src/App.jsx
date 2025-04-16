@@ -9,6 +9,7 @@ import { ThemeProvider } from "./contexts/Themecontext.jsx";
 import { Catogories } from './components/Categories.jsx';
 import { Footer } from './components/Footer.jsx';
 import { ProductsDetails } from "./components/pages/ProductDetails.jsx";
+import { Products } from "./components/pages/Products.jsx";
 import "./index.css";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -81,7 +82,10 @@ function App() {
                 </>
               }
             />
-            <Route path="/product" element={<ProductsDetails />} />
+            <Route path="/product" element={<ProductsDetails />} 
+            />
+            <Route path="/products" element={<Products />} />
+            
           </Routes>
       </div>
       <Footer />
