@@ -1,17 +1,42 @@
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link, data } from "react-router-dom";
 import { FiChevronDown, FiFilter } from "react-icons/fi";
 import { Hero } from "../Hero.jsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdExpandMore } from "react-icons/md";
+import {ProductCard} from "../ProductCard.jsx";
 import SortDropdown from "../button/SortDropdown.jsx";
+import { getProducts } from "../../api/products.js";
 
 export const Products = () => {
   const handleSortChange = (value) => {
     // thực hiện fetch lại danh sách sản phẩm theo value
   };
   const [toggle, setToggle] = useState(false); //state tạm để tes toggle
+  const [error , setError] = useState(null); //state tạm để test error
+  const [products, setProducts] = useState([]); 
+  useEffect( () => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProducts(); 
+        setProducts(data); // set lại state products với dữ liệu từ API
+      } catch (err){
+        setError(err); // nếu có lỗi thì set lại state error
+      }
+    };
+    fetchProducts(); 
+  },[]);
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  // Hiển thị thông báo nếu không có sản phẩm
+  if (products.length === 0) {
+    return <p>Sản phẩm không tồn tại hoặc đang tải...</p>;
+  }
+
 
   return (
+    
     <div className="bg-white">
       {/* Hero section */}
       <section>
@@ -43,7 +68,7 @@ export const Products = () => {
       {/* Main Content: Categories + Product List */}
       <section className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Sidebar - Categories */}
-        <aside className="hidden md:block col-span-1 space-y-6  ">
+        <aside className="hidden md:block col-span-1 space-y-6 sticky top-24 self-start ">
           {/* Top category item: còn hàng */}
           <div className="flex items-center justify-between border-b pb-2">
             <label className="text-sm font-bold">Còn hàng</label>
@@ -80,9 +105,11 @@ export const Products = () => {
         </aside>
 
         {/* Product List placeholder */}
-        <div className="md:col-span-3">
+        <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Nơi render danh sách sản phẩm */}
-          <p className="text-center text-gray-500">[Danh sách sản phẩm sẽ hiển thị ở đây]</p>
+          {products.map((product) => (
+            <ProductCard key = {product.id} product={product} />
+          ))}
         </div>
       </section>
     </div>
