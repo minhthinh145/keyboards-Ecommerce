@@ -11,6 +11,8 @@ import { Footer } from './components/Footer.jsx';
 import { ProductsDetails } from "./components/pages/ProductDetails.jsx";
 import { Products } from "./components/pages/Products.jsx";
 import "./index.css";
+import { Signin } from './components/pages/SignIn.jsx';
+import { Outlet } from "react-router-dom";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -61,36 +63,42 @@ function App() {
 
   return <>
   <Router>
-    <ThemeProvider>
-       <div className={`min-h-screen ${isDarkMode ? "dark" : ""} bg-white dark:bg-gray-900 transition-colors dark:text-white duration-300`}>
-        <Header
-          isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
-          isMenuOpen={isMenuOpen} 
-          setIsMenuOpen={setIsMenuOpen}
-          cartCount={cartCount}
-        />
-        
-        <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <Hero />
-                  <FeaturedProducts products={products} />
-                  <Catogories categories={categories} />
-                </>
-              }
+  <ThemeProvider>
+    <Routes>
+      {/* Layout có Header/Footer */}
+      <Route
+        element={
+          <div className={`min-h-screen ${isDarkMode ? "dark" : ""} bg-white dark:bg-gray-900 transition-colors dark:text-white duration-300`}>
+            <Header
+              isDarkMode={isDarkMode}
+              toggleDarkMode={toggleDarkMode}
+              isMenuOpen={isMenuOpen} 
+              setIsMenuOpen={setIsMenuOpen}
+              cartCount={cartCount}
             />
-            <Route path="/product" element={<ProductsDetails />} 
-            />
-            <Route path="/products" element={<Products />} />
             
-          </Routes>
-      </div>
-      <Footer />
-      </ThemeProvider>
-    </Router>
+            <Outlet /> {/* Đây là chỗ render các component con */}
+            
+            <Footer />
+          </div>
+        }
+      >
+        <Route path="/" element={
+          <>
+            <Hero />
+            <FeaturedProducts products={products} />
+            <Catogories categories={categories} />
+          </>
+        } />
+          <Route path="/product/:id" element={<ProductsDetails />} />
+          <Route path="/products" element={<Products />} />
+        </Route>
+
+        {/* Layout KHÔNG có Header/Footer */}
+        <Route path="/signin" element={<Signin />} />
+      </Routes>
+    </ThemeProvider>
+  </Router>
   </>;
 }
 

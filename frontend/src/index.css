@@ -8,3 +8,13 @@ html,body{
   padding :0;
   font-family: "Space Grotesk", sans-serif;
 }
+/* index.css */
+/* index.css */
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin 10s linear infinite;
+  }
+  .animate-spin-fast {
+    animation: spin 0.01ms linear infinite;
+  }
+}

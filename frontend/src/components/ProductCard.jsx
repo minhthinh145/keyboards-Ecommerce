@@ -1,3 +1,4 @@
+
 export const ProductCard = ({ product }) => (
     <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300 p-4 border border-gray-200 transform hover:-translate-y-1">
       <img

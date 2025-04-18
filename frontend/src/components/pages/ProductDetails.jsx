@@ -52,15 +52,13 @@ export const ProductsDetails = () => {
         }
 
 
-    // TODO: Replace hardcoded product information (e.g., image URL, price, description, features, etc.)
-    // with dynamic data from the `product` object fetched from the API.
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 py-16 ml-8 mr-8">
 
             <div className="bg-gray-200 rounded-lg inline-block self-start px-2 py-2">
                 <div className="flex justify-center items-center">
                 <img 
-                    src="https://images.unsplash.com/photo-1587829741301-dc798b83add3"
+                    src={product.imageUrl}
                     alt="Product"
                     className="object-cover w-full h-full "
                 />
@@ -85,7 +83,7 @@ export const ProductsDetails = () => {
 
                 <div className='mt-2'>
                     <div className='flex items-center gap-3'>
-                        <span className="text-3xl font-bold text-indigo-800 dark:text-white">199.99$</span>
+                        <span className="text-3xl font-bold text-indigo-800 dark:text-white">{product.price.toLocaleString("vi-VN")}</span>
                         <span className="line-through text-lg text-gray-500">299.99$</span>
                         <span className="bg-indigo-100 text-indigo-800 rounded-lg  py-1 px-2 font-medium">Save 30%</span>                
                     </div>

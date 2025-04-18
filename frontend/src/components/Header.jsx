@@ -1,9 +1,6 @@
-import { useState } from "react";
 import {  FiShoppingCart, FiX, FiMenu , FiUser } from "react-icons/fi";
 import {DarkModeToggler} from "./button/DarkModeToggler.jsx";
 import { Link } from "react-router-dom";
-import { ProductsDetails } from "./pages/ProductDetails.jsx";
-import { Router } from "react-router-dom";
 export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
   const darkMode = true;
   const navItems = [
@@ -40,7 +37,8 @@ export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
 
                     <div className="flex items-center space-x-4">
                     <div className="relative hover:bg-zinc-300 dark:hover:bg-zinc-700 p-2 rounded-full transform hover:scale-[1.02] transition duration-200">
-                    <FiUser className="h-6 w-6" />
+                      
+                      <Link to="/signin"><FiUser className="h-6 w-6"  /></Link>
                       </div>
                             <DarkModeToggler />
                     <div className="relative hover:bg-gray-200 p-2 rounded-full hover:scale-[1.02] transform">
