@@ -17,4 +17,7 @@ html,body{
   .animate-spin-fast {
     animation: spin 0.01ms linear infinite;
   }
+  .hover-scale{
+    @apply transition-colors transform hover:scale-[1.02] duration-200;
+  }
 }

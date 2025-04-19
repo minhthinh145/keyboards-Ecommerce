@@ -41,7 +41,7 @@ export const Products = () => {
       {/* Hero section */}
       <section>
         <Hero />
-      </section>
+      </section> 
 
       {/* Filter & Sort Top Bar */}
       <section className="">
