@@ -1,6 +1,5 @@
-// src/api/products.js
-
-const BASE_URL = "http://localhost:5066/api/product/"
+const VITE_API_URL = import.meta.env.VITE_API_URL;
+const BASE_URL = `${VITE_API_URL}product/`;
 export const getProductById = async (id) => {
   try {
     const response = await fetch(`${BASE_URL}${id}`);
@@ -27,4 +26,4 @@ export const getProducts = async () => {
     console.error("API Error:", error);
     throw error; // Đảm bảo lỗi được ném ra để xử lý tiếp trong component
   }
-}
+};

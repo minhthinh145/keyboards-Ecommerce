@@ -1,6 +1,6 @@
 import { HiMail } from "react-icons/hi";
 
-export const EmailInput = () => {
+export const EmailInput = ({ value, onChange }) => {
   return (
     <div>
       <label htmlFor="email" className="block text-sm font-medium mb-2">
@@ -15,6 +15,8 @@ export const EmailInput = () => {
         <input
           type="email"
           id="email"
+          value={value}
+          onChange={onChange}
           className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all focus:translate-y-[-2px]"
           placeholder="Nhập email của bạn"
         />

@@ -1,4 +1,3 @@
-import ReactLogo from "../../../public/LogoReact.svg";
 import React from "react";
 import { Link } from "react-router-dom";
 import { EmailInput } from "../form/EmailInput";
@@ -7,7 +6,10 @@ import { PasswordInput } from "../form/PasswordInput";
 import { SubmitButton } from "../form/SubmitButton";
 import { FingerprintLogin } from "../form/FingerprintLogin";
 import { Sidebar } from "../form/AuthSideBar";
+import { UseLogin } from "../../hooks/useLogin.js";
 export const Signin = () => {
+  const { email, password, setEmail, setPassword, handleLogin } = UseLogin();
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-indigo-50 px-16 py-16">
       <div className="grid grid-cols-1 md:grid-cols-2 max-w-6xl w-full bg-white rounded-3xl shadow-lg overflow-hidden">
@@ -23,9 +25,15 @@ export const Signin = () => {
             <h2 className="text-2xl font-bold mb-2">Đăng nhập</h2>
             <p>Nhập email và mật khẩu của bạn để đăng nhập</p>
           </div>
-          <form className="space-y-6">
-            <EmailInput />
-            <PasswordInput />
+          <form className="space-y-6" onSubmit={handleLogin}>
+            <EmailInput
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <PasswordInput
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             {/* Remember Me Checkbox */}
             <div className="flex items-center justify-end hover-scale">
               <input
@@ -45,10 +53,11 @@ export const Signin = () => {
 
             <div className="text-center mt-6 flex items-center justify-center">
               <p className="text-sm text-gray-600">Bạn chưa có tài khoản?</p>
-              <Link to="/signup">
-                <a className="ml-1 text-indigo-600 text-sm hover:text-indigo-800 font-semibold hover-scale">
-                  Đăng ký ngay
-                </a>
+              <Link
+                className="ml-1 text-indigo-600 text-sm hover:text-indigo-800 font-semibold hover-scale"
+                to="/signup"
+              >
+                Đăng ký ngay
               </Link>
             </div>
           </form>
