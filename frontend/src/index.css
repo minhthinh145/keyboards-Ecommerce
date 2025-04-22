@@ -20,4 +20,10 @@ html,body{
   .hover-scale{
     @apply transition-colors transform hover:scale-[1.02] duration-200;
   }
+  .animate-slide-in-down {
+    @apply animate-[slide-in-down_0.3s_ease-out];
+  }
+  
+  
 }
+

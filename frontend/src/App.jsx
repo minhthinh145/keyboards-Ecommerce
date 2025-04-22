@@ -14,6 +14,7 @@ import { Signin } from "./pages/SignIn.jsx";
 import { Outlet } from "react-router-dom";
 import { SignUp } from "./pages/SignUp.jsx";
 import { AuthProvider } from "./contexts/Authcontext.jsx";
+import { ToastProvider } from "./contexts/ToastContext.jsx";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -65,6 +66,7 @@ function App() {
   return (
     <>
       <AuthProvider>
+        <ToastProvider>
         <Router>
           <ThemeProvider>
             <Routes>
@@ -108,6 +110,7 @@ function App() {
             </Routes>
           </ThemeProvider>
         </Router>
+        </ToastProvider>
       </AuthProvider>
     </>
   );
