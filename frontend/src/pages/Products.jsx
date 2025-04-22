@@ -1,30 +1,36 @@
-import { BrowserRouter as Router, Route, Routes, Link, data } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  data,
+} from "react-router-dom";
 import { FiChevronDown, FiFilter } from "react-icons/fi";
-import { Hero } from "../Hero.jsx";
+import { Hero } from "../components/Hero.jsx";
 import { useEffect, useState } from "react";
 import { MdExpandMore } from "react-icons/md";
-import {ProductCard} from "../ProductCard.jsx";
-import SortDropdown from "../button/SortDropdown.jsx";
-import { getProducts } from "../../api/products.js";
+import { ProductCard } from "../components/ProductCard.jsx";
+import SortDropdown from "../components/button/SortDropdown.jsx";
+import { getProducts } from "../api/products.js";
 
 export const Products = () => {
   const handleSortChange = (value) => {
     // thực hiện fetch lại danh sách sản phẩm theo value
   };
   const [toggle, setToggle] = useState(false); //state tạm để tes toggle
-  const [error , setError] = useState(null); //state tạm để test error
-  const [products, setProducts] = useState([]); 
-  useEffect( () => {
+  const [error, setError] = useState(null); //state tạm để test error
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await getProducts(); 
+        const data = await getProducts();
         setProducts(data); // set lại state products với dữ liệu từ API
-      } catch (err){
+      } catch (err) {
         setError(err); // nếu có lỗi thì set lại state error
       }
     };
-    fetchProducts(); 
-  },[]);
+    fetchProducts();
+  }, []);
   if (error) {
     return <p>{error}</p>;
   }
@@ -34,14 +40,12 @@ export const Products = () => {
     return <p>Sản phẩm không tồn tại hoặc đang tải...</p>;
   }
 
-
   return (
-    
     <div className="bg-white">
       {/* Hero section */}
       <section>
         <Hero />
-      </section> 
+      </section>
 
       {/* Filter & Sort Top Bar */}
       <section className="">
@@ -57,11 +61,10 @@ export const Products = () => {
             <h3 className="text-sm font-semibold">Sắp xếp:</h3>
             <SortDropdown onChange={handleSortChange} />
           </div>
-          
         </div>
         {/* Divider line */}
         <div className="max-w-7xl mx-auto px-4">
-            <div className="hidden md:block  border-b border-black mt-2 " />
+          <div className="hidden md:block  border-b border-black mt-2 " />
         </div>
       </section>
 
@@ -73,16 +76,16 @@ export const Products = () => {
           <div className="flex items-center justify-between border-b pb-2">
             <label className="text-sm font-bold">Còn hàng</label>
             <button
-                onClick={() => setToggle(!toggle)}
-                className={`w-10 h-5 rounded-full relative cursor-pointer transition-colors duration-300 ${
-                    toggle ? "bg-green-500" : "bg-gray-300"
+              onClick={() => setToggle(!toggle)}
+              className={`w-10 h-5 rounded-full relative cursor-pointer transition-colors duration-300 ${
+                toggle ? "bg-green-500" : "bg-gray-300"
+              }`}
+            >
+              <div
+                className={`w-4 h-4 bg-white rounded-full absolute top-0.5 shadow transition-transform duration-300 ease-in-out ${
+                  toggle ? "translate-x-5" : "translate-x-0.5"
                 }`}
-                >
-                <div
-                    className={`w-4 h-4 bg-white rounded-full absolute top-0.5 shadow transition-transform duration-300 ease-in-out ${
-                    toggle ? "translate-x-5" : "translate-x-0.5"
-                    }`}
-                />
+              />
             </button>
           </div>
 
@@ -108,8 +111,8 @@ export const Products = () => {
         <div className="md:col-span-3 grid g</div>rid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Nơi render danh sách sản phẩm */}
           {products.map((product) => (
-            <Link to={`/product/${product.id}`} >
-              <ProductCard key = {product.id} product={product} />
+            <Link to={`/product/${product.id}`}>
+              <ProductCard key={product.id} product={product} />
             </Link>
           ))}
         </div>

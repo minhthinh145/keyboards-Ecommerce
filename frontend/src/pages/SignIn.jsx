@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { EmailInput } from "../form/EmailInput";
+import { EmailInput } from "../components/form/EmailInput.jsx";
 import { HiLockClosed } from "react-icons/hi";
-import { PasswordInput } from "../form/PasswordInput";
-import { SubmitButton } from "../form/SubmitButton";
-import { FingerprintLogin } from "../form/FingerprintLogin";
-import { Sidebar } from "../form/AuthSideBar";
-import { UseLogin } from "../../hooks/useLogin.js";
+import { PasswordInput } from "../components/form/PasswordInput.jsx";
+import { SubmitButton } from "../components/form/SubmitButton.jsx";
+import { FingerprintLogin } from "../components/form/FingerprintLogin.jsx";
+import { Sidebar } from "../components/form/AuthSideBar.jsx";
+import { UserLogin } from "../hooks/userLogin.js";
 export const Signin = () => {
-  const { email, password, setEmail, setPassword, handleLogin } = UseLogin();
+  const { email, password, setEmail, setPassword, handleLogin } = UserLogin();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-indigo-50 px-16 py-16">

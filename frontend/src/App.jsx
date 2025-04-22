@@ -7,12 +7,13 @@ import { FeaturedProducts } from "./components/FeaturedProducts.jsx";
 import { ThemeProvider } from "./contexts/Themecontext.jsx";
 import { Catogories } from "./components/Categories.jsx";
 import { Footer } from "./components/Footer.jsx";
-import { ProductsDetails } from "./components/pages/ProductDetails.jsx";
-import { Products } from "./components/pages/Products.jsx";
+import { ProductsDetails } from "./pages/ProductDetails.jsx";
+import { Products } from "./pages/Products.jsx";
 import "./index.css";
-import { Signin } from "./components/auth/SignIn.jsx";
+import { Signin } from "./pages/SignIn.jsx";
 import { Outlet } from "react-router-dom";
-import { SignUp } from "./components/auth/SignUp.jsx";
+import { SignUp } from "./pages/SignUp.jsx";
+import { AuthProvider } from "./contexts/Authcontext.jsx";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -63,49 +64,51 @@ function App() {
 
   return (
     <>
-      <Router>
-        <ThemeProvider>
-          <Routes>
-            {/* Layout có Header/Footer */}
-            <Route
-              element={
-                <div
-                  className={`min-h-screen ${
-                    isDarkMode ? "dark" : ""
-                  } bg-white dark:bg-gray-900 transition-colors dark:text-white duration-300`}
-                >
-                  <Header
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                    isMenuOpen={isMenuOpen}
-                    setIsMenuOpen={setIsMenuOpen}
-                    cartCount={cartCount}
-                  />
-                  <Outlet /> {/* Đây là chỗ render các component con */}
-                  <Footer />
-                </div>
-              }
-            >
+      <AuthProvider>
+        <Router>
+          <ThemeProvider>
+            <Routes>
+              {/* Layout có Header/Footer */}
               <Route
-                path="/"
                 element={
-                  <>
-                    <Hero />
-                    <FeaturedProducts products={products} />
-                    <Catogories categories={categories} />
-                  </>
+                  <div
+                    className={`min-h-screen ${
+                      isDarkMode ? "dark" : ""
+                    } bg-white dark:bg-gray-900 transition-colors dark:text-white duration-300`}
+                  >
+                    <Header
+                      isDarkMode={isDarkMode}
+                      toggleDarkMode={toggleDarkMode}
+                      isMenuOpen={isMenuOpen}
+                      setIsMenuOpen={setIsMenuOpen}
+                      cartCount={cartCount}
+                    />
+                    <Outlet /> {/* Đây là chỗ render các component con */}
+                    <Footer />
+                  </div>
                 }
-              />
-              <Route path="/product/:id" element={<ProductsDetails />} />
-              <Route path="/products" element={<Products />} />
-            </Route>
+              >
+                <Route
+                  path="/"
+                  element={
+                    <>
+                      <Hero />
+                      <FeaturedProducts products={products} />
+                      <Catogories categories={categories} />
+                    </>
+                  }
+                />
+                <Route path="/product/:id" element={<ProductsDetails />} />
+                <Route path="/products" element={<Products />} />
+              </Route>
 
-            {/* Layout KHÔNG có Header/Footer */}
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Routes>
-        </ThemeProvider>
-      </Router>
+              {/* Layout KHÔNG có Header/Footer */}
+              <Route path="/signin" element={<Signin />} />
+              <Route path="/signup" element={<SignUp />} />
+            </Routes>
+          </ThemeProvider>
+        </Router>
+      </AuthProvider>
     </>
   );
 }
