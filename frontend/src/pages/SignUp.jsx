@@ -9,6 +9,7 @@ import { UsernameInput } from "../components/form/UsernameInput";
 import { Sidebar } from "../components/form/AuthSideBar";
 import { useUserSignUp } from "../hooks/userSignUp";
 import { useForm } from "react-hook-form";
+import { PhoneNumberInput } from "../components/form/PhoneNumberInput";
 export const SignUp = () => {
   const {
     register,
@@ -47,6 +48,7 @@ export const SignUp = () => {
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <UsernameInput register={register} errors={errors} />
             <EmailSignUp register={register} errors={errors} />
+            <PhoneNumberInput register={register} errors={errors} />
             <ConfirmPasswordInput
               register={register}
               errors={errors}

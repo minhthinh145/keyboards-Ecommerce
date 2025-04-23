@@ -15,6 +15,7 @@ import { Outlet } from "react-router-dom";
 import { SignUp } from "./pages/SignUp.jsx";
 import { AuthProvider } from "./contexts/Authcontext.jsx";
 import { ToastProvider } from "./contexts/ToastContext.jsx";
+import { UserProfile } from "./pages/UserProfile.jsx";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -67,49 +68,50 @@ function App() {
     <>
       <AuthProvider>
         <ToastProvider>
-        <Router>
-          <ThemeProvider>
-            <Routes>
-              {/* Layout có Header/Footer */}
-              <Route
-                element={
-                  <div
-                    className={`min-h-screen ${
-                      isDarkMode ? "dark" : ""
-                    } bg-white dark:bg-gray-900 transition-colors dark:text-white duration-300`}
-                  >
-                    <Header
-                      isDarkMode={isDarkMode}
-                      toggleDarkMode={toggleDarkMode}
-                      isMenuOpen={isMenuOpen}
-                      setIsMenuOpen={setIsMenuOpen}
-                      cartCount={cartCount}
-                    />
-                    <Outlet /> {/* Đây là chỗ render các component con */}
-                    <Footer />
-                  </div>
-                }
-              >
+          <Router>
+            <ThemeProvider>
+              <Routes>
+                {/* Layout có Header/Footer */}
                 <Route
-                  path="/"
                   element={
-                    <>
-                      <Hero />
-                      <FeaturedProducts products={products} />
-                      <Catogories categories={categories} />
-                    </>
+                    <div
+                      className={`min-h-screen ${
+                        isDarkMode ? "dark" : ""
+                      } bg-white dark:bg-gray-900 transition-colors dark:text-white duration-300`}
+                    >
+                      <Header
+                        isDarkMode={isDarkMode}
+                        toggleDarkMode={toggleDarkMode}
+                        isMenuOpen={isMenuOpen}
+                        setIsMenuOpen={setIsMenuOpen}
+                        cartCount={cartCount}
+                      />
+                      <Outlet /> {/* Đây là chỗ render các component con */}
+                      <Footer />
+                    </div>
                   }
-                />
-                <Route path="/product/:id" element={<ProductsDetails />} />
-                <Route path="/products" element={<Products />} />
-              </Route>
+                >
+                  <Route
+                    path="/"
+                    element={
+                      <>
+                        <Hero />
+                        <FeaturedProducts products={products} />
+                        <Catogories categories={categories} />
+                      </>
+                    }
+                  />
+                  <Route path="/product/:id" element={<ProductsDetails />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="/userprofile" element={<UserProfile />} />
+                </Route>
 
-              {/* Layout KHÔNG có Header/Footer */}
-              <Route path="/signin" element={<Signin />} />
-              <Route path="/signup" element={<SignUp />} />
-            </Routes>
-          </ThemeProvider>
-        </Router>
+                {/* Layout KHÔNG có Header/Footer */}
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/signup" element={<SignUp />} />
+              </Routes>
+            </ThemeProvider>
+          </Router>
         </ToastProvider>
       </AuthProvider>
     </>

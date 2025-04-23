@@ -51,7 +51,7 @@ export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
                   <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 shadow-lg rounded-md opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200 z-50">
                     {" "}
                     <Link
-                      to="/account"
+                      to="/userprofile"
                       className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                       <p className="font-semibold">Chỉnh sửa thông tin</p>

@@ -7,12 +7,24 @@ export const useUserSignUp = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const signUpUser = async ({ username, email, password, confirmpassword }) => {
+  const signUpUser = async ({
+    username,
+    email,
+    phoneNumber,
+    password,
+    confirmpassword,
+  }) => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await signup(username, email, password, confirmpassword);
+      const response = await signup(
+        username,
+        email,
+        phoneNumber,
+        password, 
+        confirmpassword
+      );
       if (response) {
         navigate("/signin");
       }
