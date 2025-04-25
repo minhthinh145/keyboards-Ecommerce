@@ -64,10 +64,11 @@ export const SignUp = () => {
             <FingerprintLogin />
             <div className="text-center mt-6 flex items-center justify-center">
               <p className="text-sm text-gray-600">Bạn đã có tài khoản?</p>
-              <Link to="/signin">
-                <a className="ml-1 text-indigo-600 text-sm hover:text-indigo-800 font-semibold hover-scale">
-                  Đăng nhập ngay
-                </a>
+              <Link
+                to="/signin"
+                className="ml-1 text-indigo-600 text-sm hover:text-indigo-800 font-semibold hover-scale"
+              >
+                Đăng nhập ngay
               </Link>
             </div>
           </form>

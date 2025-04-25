@@ -13,9 +13,10 @@ import "./index.css";
 import { Signin } from "./pages/SignIn.jsx";
 import { Outlet } from "react-router-dom";
 import { SignUp } from "./pages/SignUp.jsx";
-import { AuthProvider } from "./contexts/Authcontext.jsx";
+import { AuthProvider } from "./contexts/AuthContext.jsx";
 import { ToastProvider } from "./contexts/ToastContext.jsx";
 import { UserProfile } from "./pages/UserProfile.jsx";
+import { ErrorPages } from "./pages/404Error.jsx";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -104,6 +105,7 @@ function App() {
                   <Route path="/product/:id" element={<ProductsDetails />} />
                   <Route path="/products" element={<Products />} />
                   <Route path="/userprofile" element={<UserProfile />} />
+                  <Route path="/404" element={<ErrorPages />} />
                 </Route>
 
                 {/* Layout KHÔNG có Header/Footer */}

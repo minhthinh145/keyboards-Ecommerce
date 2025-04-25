@@ -22,7 +22,7 @@ export const UsernameInput = ({ register, errors }) => {
             },
           })}
           className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all focus:translate-y-[-2px]"
-          placeholder="Nhập tên tài khoản của bạn"
+          placeholder="Nhập tên tài khoản của bạn"    
         />
       </div>
       {errors.username && (

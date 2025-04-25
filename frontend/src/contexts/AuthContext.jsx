@@ -1,38 +1,118 @@
-import React, { createContext, useEffect, useState } from "react";
+// contexts/Authcontext.jsx
+import { createContext, useState, useEffect } from "react";
+import { refreshToken as refreshTokenApi } from "../api/auth/refreshToken.js";
+import { logout as logoutApi } from "../api/auth/logout.js";
+import { jwtDecode } from "jwt-decode";
+import { getProfile } from "../api/auth/profile.js";
 
-// Tạo context để cung cấp thông tin đăng nhập cho toàn bộ ứng dụng
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
 
-  // Dùng useEffect để lấy thông tin người dùng từ localStorage khi ứng dụng khởi động
+  // Khôi phục trạng thái từ localStorage khi ứng dụng khởi động
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    const storedToken = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+    const storedAccessToken = localStorage.getItem("accessToken");
+    const storedRefreshToken = localStorage.getItem("refreshToken");
 
-    if (storedUsername && storedToken) {
-      setUser({ username: storedUsername, token: storedToken });
+    console.log("Restoring from localStorage:", {
+      storedUser,
+      storedAccessToken,
+      storedRefreshToken,
+    });
+
+    if (storedAccessToken && storedRefreshToken) {
+      setAccessToken(storedAccessToken);
+      setRefreshToken(storedRefreshToken);
+
+      if (!storedUser) {  
+        console.log("No stored user. Loading from API...");
+        loadUserProfile(storedAccessToken);
+      } else {
+        setUser(JSON.parse(storedUser));
+      }
     }
   }, []);
 
-  // Hàm đăng nhập: lưu thông tin vào localStorage và cập nhật state user
-  const login = (username, token) => {
-    localStorage.setItem("username", username);
-    localStorage.setItem("token", token);
-    setUser({ username, token });
-    console.log("User logged in:", { username, token });
+  const login = async (username, accessToken, refreshToken) => {
+    setUser({ username });
+    setAccessToken(accessToken);
+    setRefreshToken(refreshToken);
+
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+    await loadUserProfile(accessToken);
   };
 
-  // Hàm đăng xuất: xóa thông tin từ localStorage và cập nhật state user
-  const logout = () => {
-    localStorage.removeItem("username");
-    localStorage.removeItem("token");
+  const logout = async () => {
+    if (refreshToken) {
+      try {
+        await logoutApi(refreshToken); // Gọi API để thu hồi refreshToken
+      } catch (err) {
+        console.error("Error during logout:", err);
+      }
+    }
+
     setUser(null);
+    setAccessToken(null);
+    setRefreshToken(null);
+
+    localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+  };
+
+  const loadUserProfile = async (token) => {
+    try {
+      const profile = await getProfile(token);
+      setUser(profile);
+      localStorage.setItem("user", JSON.stringify(profile));
+    } catch (err) {
+      console.error("Error loading user profile:", err);
+      await logout();
+    }
+  };
+  // Hàm kiểm tra và làm mới token
+  const getValidToken = async () => {
+    if (!accessToken || !refreshToken) return null;
+
+    try {
+      const decoded = jwtDecode(accessToken);
+      const currentTime = Date.now() / 1000;
+
+      // Nếu token còn hạn, trả về token hiện tại
+      if (decoded.exp > currentTime) {
+        return accessToken;
+      }
+
+      // Nếu token hết hạn, làm mới bằng refreshToken
+      const newAccessToken = await refreshTokenApi(refreshToken);
+      setAccessToken(newAccessToken);
+      localStorage.setItem("accessToken", newAccessToken);
+      await loadUserProfile(newAccessToken);
+      return newAccessToken;
+    } catch (err) {
+      console.error("Error refreshing token:", err);
+      await logout(); // Nếu không làm mới được, đăng xuất
+      return null;
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        accessToken,
+        refreshToken,
+        login,
+        logout,
+        getValidToken,
+        setUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

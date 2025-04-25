@@ -3,7 +3,7 @@ import { DarkModeToggler } from "./button/DarkModeToggler.jsx";
 import { Link } from "react-router-dom";
 
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../contexts/Authcontext.jsx";
+import { AuthContext } from "../contexts/AuthContext.jsx";
 export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
   const darkMode = true;
   const navItems = [
@@ -12,6 +12,7 @@ export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
     { name: "Danh mục", href: "/categories" },
     //  { name: "About", href: "/about" },
     { name: "Liên hệ", href: "/contact" },
+    { name: "404Error", href: "/404" },
   ];
   const { user, logout } = useContext(AuthContext);
   return (
@@ -40,35 +41,38 @@ export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <div className="hover:bg-zinc-300 dark:hover:bg-zinc-700 p-2 rounded-full transform hover:scale-[1.02] transition duration-200 relative">
-              {user ? (
-                <div className="group relative cursor-pointer">
-                  <span className="text-sm font-medium text-gray-700 dark:text-white px-3 py-2 rounded-md hover:bg-zinc-300 dark:hover:bg-zinc-700 transition">
-                    {user.username}
-                  </span>
+            <div className="relative group cursor-pointer">
+              <div className="hover:bg-zinc-300 dark:hover:bg-zinc-700 p-2 rounded-full transform hover:scale-[1.02] transition duration-200 relative">
+                {" "}
+                {user ? (
+                  <div className="group relative cursor-pointer">
+                    <span className="text-sm font-medium text-gray-700 dark:text-white px-3 py-2 rounded-md hover:bg-zinc-300 dark:hover:bg-zinc-700 transition">
+                      {user.userName}
+                    </span>
 
-                  {/* Dropdown */}
-                  <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 shadow-lg rounded-md opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200 z-50">
-                    {" "}
-                    <Link
-                      to="/userprofile"
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                      <p className="font-semibold">Chỉnh sửa thông tin</p>
-                    </Link>
-                    <button
-                      onClick={logout}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                      <p className="font-semibold">Đăng xuất</p>
-                    </button>
+                    {/* Dropdown */}
+                    <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 shadow-lg rounded-md opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200 z-50">
+                      {" "}
+                      <Link
+                        to="/userprofile"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        <p className="font-semibold">Chỉnh sửa thông tin</p>
+                      </Link>
+                      <button
+                        onClick={logout}
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        <p className="font-semibold">Đăng xuất</p>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <Link to="/signin">
-                  <FiUser className="h-6 w-6 " />
-                </Link>
-              )}
+                ) : (
+                  <Link to="/signin">
+                    <FiUser className="h-6 w-6 " />
+                  </Link>
+                )}
+              </div>
             </div>
 
             <DarkModeToggler />

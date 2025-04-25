@@ -9,7 +9,7 @@ export const signup = async (
   password,
   confirmpassword
 ) => {
-  const BASE_URL = `${VITE_API_URL}Accounts/SignUp`;
+  const BASE_URL = `${VITE_API_URL}/api/auth/signup`;
   try {
     const response = await axios.post(BASE_URL, {
       username,
