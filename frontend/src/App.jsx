@@ -17,6 +17,7 @@ import { AuthProvider } from "./contexts/AuthContext.jsx";
 import { ToastProvider } from "./contexts/ToastContext.jsx";
 import { UserProfile } from "./pages/UserProfile.jsx";
 import { ErrorPages } from "./pages/404Error.jsx";
+import { Loading } from "./pages/Loading.jsx";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -111,6 +112,7 @@ function App() {
                 {/* Layout KHÔNG có Header/Footer */}
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/loading" element={<Loading />} />
               </Routes>
             </ThemeProvider>
           </Router>

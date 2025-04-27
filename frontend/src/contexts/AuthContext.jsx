@@ -4,6 +4,8 @@ import { refreshToken as refreshTokenApi } from "../api/auth/refreshToken.js";
 import { logout as logoutApi } from "../api/auth/logout.js";
 import { jwtDecode } from "jwt-decode";
 import { getProfile } from "../api/auth/profile.js";
+import { nav } from "framer-motion/client";
+import { Navigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -28,7 +30,7 @@ export const AuthProvider = ({ children }) => {
       setAccessToken(storedAccessToken);
       setRefreshToken(storedRefreshToken);
 
-      if (!storedUser) {  
+      if (!storedUser) {
         console.log("No stored user. Loading from API...");
         loadUserProfile(storedAccessToken);
       } else {
@@ -63,6 +65,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    Navigate("/");
   };
 
   const loadUserProfile = async (token) => {

@@ -10,6 +10,7 @@ import { Sidebar } from "../components/form/AuthSideBar";
 import { useUserSignUp } from "../hooks/userSignUp";
 import { useForm } from "react-hook-form";
 import { PhoneNumberInput } from "../components/form/PhoneNumberInput";
+import { DateOfBirthInput } from "../components/form/DateOfBirhInput";
 export const SignUp = () => {
   const {
     register,
@@ -49,6 +50,7 @@ export const SignUp = () => {
             <UsernameInput register={register} errors={errors} />
             <EmailSignUp register={register} errors={errors} />
             <PhoneNumberInput register={register} errors={errors} />
+            <DateOfBirthInput register={register} errors={errors} />
             <ConfirmPasswordInput
               register={register}
               errors={errors}

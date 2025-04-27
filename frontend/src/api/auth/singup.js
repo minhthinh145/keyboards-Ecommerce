@@ -6,6 +6,7 @@ export const signup = async (
   username,
   email,
   phoneNumber,
+  dateOfBirth,
   password,
   confirmpassword
 ) => {
@@ -15,6 +16,7 @@ export const signup = async (
       username,
       email,
       phoneNumber,
+      dateOfBirth,
       password,
       confirmpassword,
     });

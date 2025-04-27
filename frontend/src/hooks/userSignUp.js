@@ -11,6 +11,7 @@ export const useUserSignUp = () => {
     username,
     email,
     phoneNumber,
+    dateOfBirth,
     password,
     confirmpassword,
   }) => {
@@ -22,7 +23,8 @@ export const useUserSignUp = () => {
         username,
         email,
         phoneNumber,
-        password, 
+        dateOfBirth,
+        password,
         confirmpassword
       );
       if (response) {

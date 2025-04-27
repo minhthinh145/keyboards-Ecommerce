@@ -1,43 +1,20 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
-  data,
-} from "react-router-dom";
-import { FiChevronDown, FiFilter } from "react-icons/fi";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import { FiFilter } from "react-icons/fi";
 import { Hero } from "../components/Hero.jsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MdExpandMore } from "react-icons/md";
 import { ProductCard } from "../components/ProductCard.jsx";
 import SortDropdown from "../components/button/SortDropdown.jsx";
-import { getProducts } from "../api/products.js";
-
+import { Loading } from "./Loading.jsx";
+import { useProducts } from "../hooks/useProducts.js";
 export const Products = () => {
   const handleSortChange = (value) => {
     // thực hiện fetch lại danh sách sản phẩm theo value
   };
-  const [toggle, setToggle] = useState(false); //state tạm để tes toggle
-  const [error, setError] = useState(null); //state tạm để test error
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await getProducts();
-        setProducts(data); // set lại state products với dữ liệu từ API
-      } catch (err) {
-        setError(err); // nếu có lỗi thì set lại state error
-      }
-    };
-    fetchProducts();
-  }, []);
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  // Hiển thị thông báo nếu không có sản phẩm
-  if (products.length === 0) {
-    return <p>Sản phẩm không tồn tại hoặc đang tải...</p>;
+  const [toggle, setToggle] = useState(false);
+  const { products, loading, error } = useProducts();
+  if (loading || !products || products.length === 0) {
+    return <Loading loading={loading} data={products} />;
   }
 
   return (
