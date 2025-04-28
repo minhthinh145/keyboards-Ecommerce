@@ -56,6 +56,29 @@ export const UserInformation = ({ user }) => {
           />
         </div>
       </div>
+      {/* Location with googlemaps */}
+      <div className="pt-4 grid grid-cols-1 gap-6">
+        <div className="space-y-2">
+          <label className="block text-gray-600 font-medium">Địa chỉ</label>
+          <input
+            type="text"
+            className="w-full border border-gray-300 rounded-full px-4 py-2 pt-3 focus:outline-none focus:ring-2
+             focus:ring-indigo-500 object-cover transition-all duration-200 bg-gray-50"
+            value={user?.address || ""}
+            readOnly
+          />
+          {/* Googlemaps iframe */}
+          <iframe
+            src={`https://maps.google.com/maps?q=${encodeURIComponent(
+              user?.address || ""
+            )}&output=embed`}
+            width="100%"
+            height="300"
+            className="rounded-lg shadow-md"
+            allowFullScreen
+          />
+        </div>
+      </div>
     </div>
   );
 };
