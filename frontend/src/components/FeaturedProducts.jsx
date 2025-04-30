@@ -29,7 +29,7 @@ export const FeaturedProducts = ({ products }) => {
                             ${product.price.toFixed(2)}
                         </p>
                         <div className="mt-4 flex justify-between items-center">
-                            <button
+                            <button 
                                 onClick={() => setCartCount(cartCount + 1)}
                                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300"
                             > 
