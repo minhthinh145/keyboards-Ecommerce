@@ -37,3 +37,12 @@ html,body{
   content: '';
   animation: dots 1.5s steps(3, end) infinite;
 }
+
+.form-actions {
+  position: sticky;
+  bottom: 0;
+  background-color: white; /* Để tránh bị ẩn khi cuộn */
+  padding: 10px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Để tạo bóng đổ cho nút */
+  z-index: 1000; /* Đảm bảo nút luôn ở trên */
+}
