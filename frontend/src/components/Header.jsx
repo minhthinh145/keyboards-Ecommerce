@@ -13,6 +13,7 @@ export const Header = ({ isMenuOpen, setIsMenuOpen, cartCount }) => {
     //  { name: "About", href: "/about" },
     { name: "Liên hệ", href: "/contact" },
     { name: "404Error", href: "/404" },
+    { name: "OTP", href: "/otp" },
   ];
   const { user, logout } = useContext(AuthContext);
   return (

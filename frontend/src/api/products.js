@@ -24,6 +24,6 @@ export const getProducts = async () => {
     return data;
   } catch (error) {
     console.error("API Error:", error);
-    throw error; // Đảm bảo lỗi được ném ra để xử lý tiếp trong component
+    throw error; 
   }
 };

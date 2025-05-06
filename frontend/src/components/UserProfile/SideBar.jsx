@@ -44,7 +44,7 @@ export const SideBar = ({ user, setActivePage, activePage }) => {
           }`}
         >
           <FiShield className="inline-block mr-3 text-lg" />
-          Bảo mật
+          Thay đổi mật khẩu
         </a>
         <a
           href="#settings"

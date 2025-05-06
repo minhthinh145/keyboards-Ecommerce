@@ -18,6 +18,7 @@ import { ToastProvider } from "./contexts/ToastContext.jsx";
 import { UserProfile } from "./pages/UserProfile.jsx";
 import { ErrorPages } from "./pages/404Error.jsx";
 import { Loading } from "./pages/Loading.jsx";
+import { OtpPopup } from "./components/form/PasswordComponent/OtpPopup.jsx";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -107,6 +108,7 @@ function App() {
                   <Route path="/products" element={<Products />} />
                   <Route path="/userprofile" element={<UserProfile />} />
                   <Route path="/404" element={<ErrorPages />} />
+                  <Route path="/otp" element={<OtpPopup />} />
                 </Route>
 
                 {/* Layout KHÔNG có Header/Footer */}
