@@ -7,6 +7,7 @@ import { SideBar } from "../components/UserProfile/SideBar.jsx";
 import { Loading } from "./Loading.jsx";
 import { UserInformation } from "../components/UserProfile/UserInformation.jsx";
 import { FormActionsWrapper } from "../components/UserProfile/FormActionsWrapper.jsx";
+import { ChangePasswordSite } from "../components/UserProfile/ChangePasswordSite.jsx";
 export const UserProfile = () => {
   const { user, loading, error } = useUserProfile();
   const [activePage, setActivePage] = useState("profile");
@@ -39,7 +40,6 @@ export const UserProfile = () => {
     originalData,
     setFormData
   );
-
   if (loading || !user) return <Loading loading={loading} data={user} />;
 
   const renderMainContent = () => {
@@ -69,7 +69,7 @@ export const UserProfile = () => {
           </form>
         );
       case "security":
-        return <div>Security Content</div>;
+        return <ChangePasswordSite>Security Content</ChangePasswordSite>;
       case "settings":
         return <div>Settings Content</div>;
       case "notifications":
@@ -81,7 +81,7 @@ export const UserProfile = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-gray-100 p-4 md:p-8 lg:p-12">
-      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 min-h-[80vh]">
+      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 ">
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-1/4 bg-indigo-600 text-white p-6 rounded-xl">
             <SideBar
