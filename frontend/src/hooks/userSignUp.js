@@ -13,7 +13,7 @@ export const useUserSignUp = () => {
     phoneNumber,
     dateOfBirth,
     password,
-    confirmpassword,
+    confirmPassword,
   }) => {
     setLoading(true);
     setError(null);
@@ -25,7 +25,7 @@ export const useUserSignUp = () => {
         phoneNumber,
         dateOfBirth,
         password,
-        confirmpassword
+        confirmPassword
       );
       if (response) {
         navigate("/signin");
@@ -38,7 +38,7 @@ export const useUserSignUp = () => {
     }
   };
 
-  return {
+  return {      
     signUpUser, // Export the function as signUpUser
     loading,
     error,
