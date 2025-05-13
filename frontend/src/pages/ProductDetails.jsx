@@ -12,6 +12,7 @@ import { HiOutlineUserCircle } from "react-icons/hi";
 import { IoIosRefresh } from "react-icons/io";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../api/products.js";
+import { AddToCart } from "../components/button/AddToCart.jsx";
 export const ProductsDetails = () => {
   const [selectedColor, setSelectedColor] = useState(null);
   const colorOptions = {
@@ -189,14 +190,7 @@ export const ProductsDetails = () => {
             </div>
 
             {/* Add to Cart */}
-            <button
-              className="flex items-center gap-2 bg-indigo-700 text-white px-2 py-2 rounded-full duration-200
-                         hover:bg-indigo-800 hover:shadow-lg hover:scale-[1.02] transform"
-            >
-              <FiShoppingCart className="text-2xl transition mr-2" />
-              Add to Cart
-            </button>
-
+            <AddToCart product={product} quantity={quantity} />
             {/* Wishlist (Optional) because it's doesn't exit on database.*/}
             {/*
                                       <button className='group flex items-center gap-2 border border-black  bg-indigo-700 hover:bg-indigo-800 px-2 py-2 rounded-full duration-200

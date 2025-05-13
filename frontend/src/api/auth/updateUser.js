@@ -16,7 +16,6 @@ export const updateUser = async (userData) => {
   } catch (error) {
     // Xử lý lỗi từ API
     if (error.response) {
-      // Lỗi từ server (400, 401, v.v.)
       throw new Error(
         error.response.data.message || "Lỗi khi cập nhật thông tin"
       );
