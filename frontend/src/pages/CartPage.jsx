@@ -2,17 +2,30 @@ import React from "react";
 import { useCart } from "../hooks/Cart/useGetCart";
 import { ProductInfo } from "../components/Cart/components/ProductInfo";
 import { ItemControls } from "../components/Cart/components/ItemControl";
-import { AiFillDollarCircle } from "react-icons/ai";
-
+import { useNavigate } from "react-router-dom";
+import { PayButton } from "../components/button/PayButton";
+import { useCreateOrder } from "../hooks/Orders/useCreateOrder";
 export const CartPage = () => {
-  const { cartItems, totalPrice, loading, error } = useCart();
+  const {
+    cartItems,
+    totalPrice,
+    loading: cartLoading,
+    error: cartError,
+  } = useCart();
   const shippingFee = 16000;
   const grandTotal = totalPrice + shippingFee;
-
-  if (loading) return <div className="text-center py-6">Đang tải...</div>;
-  if (error)
+  const navigate = useNavigate();
+  const {
+    handleCreateOrder,
+    loading: orderLoading,
+    error: orderError,
+  } = useCreateOrder(navigate);
+  if (cartLoading) return <div className="text-center py-6">Đang tải...</div>;
+  if (cartError)
     return (
-      <div className="text-center py-6 text-red-500">Lỗi: {error.message}</div>
+      <div className="text-center py-6 text-red-500">
+        Lỗi: {cartError.message}
+      </div>
     );
 
   return (
@@ -99,14 +112,7 @@ export const CartPage = () => {
               </div>
             </div>
             <div className="flex justify-center mt-3">
-              <button
-                className="font-bold bg-blue-900 text-white gap-4 py-4 px-12 rounded-full 
-                         hover:bg-white hover:text-blue-900 border border-blue-900 
-                         flex items-center"
-              >
-                <AiFillDollarCircle />
-                Thanh toán
-              </button>
+              <PayButton onClick={handleCreateOrder} />
             </div>
             <p className="text-center text-gray-500 text-sm mt-2">
               Đã bao gồm: Phí ship sẽ được tính khi thanh toán

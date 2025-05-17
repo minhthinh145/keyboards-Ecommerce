@@ -1,4 +1,5 @@
 import { AiFillDollarCircle } from "react-icons/ai";
+import { PayButton } from "../../button/PayButton";
 export const CartFooter = ({ totalPrice }) => {
   return (
     <div className="border-t p-4 bg-white">
@@ -16,14 +17,7 @@ export const CartFooter = ({ totalPrice }) => {
         <button className="flex-1 bg-blue-400 font-bold text-white  py-4 px-6 rounded-full hover:bg-white hover:text-blue-400 border border-blue-700">
           Xem giỏ hàng
         </button>
-        <button
-          className="flex-1 font-bold bg-blue-900 text-white gap-4 py-4 px-6 rounded-full 
-            hover:bg-white hover:text-blue-900 border border-blue-900 
-              flex justify-center items-center"
-        >
-          <AiFillDollarCircle />
-          Thanh toán
-        </button>
+        <PayButton />
       </div>
     </div>
   );

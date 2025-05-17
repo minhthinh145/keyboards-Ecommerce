@@ -9,7 +9,7 @@ export const getProductById = async (id) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("API Error:", error);
+    console.error('API Error:', error);
     throw error; // Đảm bảo lỗi được ném ra để xử lý tiếp trong component
   }
 };
@@ -23,7 +23,7 @@ export const getProducts = async () => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("API Error:", error);
-    throw error; 
+    console.error('API Error:', error);
+    throw error;
   }
 };

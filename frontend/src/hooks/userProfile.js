@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext.jsx";
-import { getProfile } from "../api/auth/profile.js";
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext.jsx';
+import { getProfile } from '../api/auth/profile.js';
 
 export const useUserProfile = () => {
   const [user, setUser] = useState(null);
@@ -10,25 +10,21 @@ export const useUserProfile = () => {
 
   useEffect(() => {
     const loadProfile = async () => {
-      console.log("Starting loadProfile...");
-      console.log("Access Token:", accessToken);
-
+      setLoading(true);
       try {
-        console.log("Getting valid token...");
+        console.log('Getting valid token...');
         const validToken = await getValidToken();
+        console.log('Valid token:', validToken);
         if (!validToken) {
-          console.log("No valid token, logging out...");
           await logout();
-          setError("Phiên đăng nhập hết hạn");
+          setError('Phiên đăng nhập hết hạn');
           return;
         }
 
         const data = await getProfile(validToken);
-        console.log("Profile fetched successfully:", data);
         setUser(data);
       } catch (err) {
-        console.error("Error in loadProfile:", err);
-        setError(err.message || "Lỗi máy chủ, không thể lấy dữ liệu");
+        setError(err.message || 'Lỗi máy chủ, không thể lấy dữ liệu');
       } finally {
         setLoading(false);
       }

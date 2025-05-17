@@ -19,6 +19,9 @@ import { UserProfile } from "./pages/UserProfile.jsx";
 import { ErrorPages } from "./pages/404Error.jsx";
 import { Loading } from "./pages/Loading.jsx";
 import { OtpPopup } from "./components/form/PasswordComponent/OtpPopup.jsx";
+import { CartComponent } from "./components/Cart/CartComponent.jsx";
+import { CartPage } from "./pages/CartPage.jsx";
+import { PaymentPage } from "./pages/Payment.jsx";
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -109,12 +112,15 @@ function App() {
                   <Route path="/userprofile" element={<UserProfile />} />
                   <Route path="/404" element={<ErrorPages />} />
                   <Route path="/otp" element={<OtpPopup />} />
+                  <Route path="/cart" element={<CartPage />} />
                 </Route>
 
                 {/* Layout KHÔNG có Header/Footer */}
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/loading" element={<Loading />} />
+                <Route path="/cart" element={<CartComponent />} />
+                <Route path="/payment" element={<PaymentPage />} />
               </Routes>
             </ThemeProvider>
           </Router>
