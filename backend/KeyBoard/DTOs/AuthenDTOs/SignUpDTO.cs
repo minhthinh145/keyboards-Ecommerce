@@ -9,6 +9,7 @@ namespace KeyBoard.DTOs.AuthenDTOs
 
         [Required, EmailAddress]
         public string Email { get; set; }
+
         [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
         [Required]
         public string PhoneNumber { get; set; }
@@ -18,11 +19,8 @@ namespace KeyBoard.DTOs.AuthenDTOs
 
         [Required]
         public string Password { get; set; } = string.Empty;
-
   
         [Required]
         public string ConfirmPassword {  get; set; } = string.Empty;
-
-
     }
 }

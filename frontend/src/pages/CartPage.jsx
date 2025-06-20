@@ -1,10 +1,10 @@
-import React from "react";
-import { useCart } from "../hooks/Cart/useGetCart";
-import { ProductInfo } from "../components/Cart/components/ProductInfo";
-import { ItemControls } from "../components/Cart/components/ItemControl";
-import { useNavigate } from "react-router-dom";
-import { PayButton } from "../components/button/PayButton";
-import { useCreateOrder } from "../hooks/Orders/useCreateOrder";
+import React from 'react';
+import { useCart } from '../hooks/Cart/useGetCart';
+import { ProductInfo } from '../components/Cart/components/ProductInfo';
+import { ItemControls } from '../components/Cart/components/ItemControl';
+import { useNavigate } from 'react-router-dom';
+import { PayButton } from '../components/button/PayButton';
+import { useCreateOrder } from '../hooks/Orders/useCreateOrder';
 export const CartPage = () => {
   const {
     cartItems,
@@ -64,10 +64,10 @@ export const CartPage = () => {
                     <ItemControls
                       quantity={item.quantity}
                       onQuantityChange={(productId, quantity) =>
-                        console.log("Quantity change:", productId, quantity)
+                        console.log('Quantity change:', productId, quantity)
                       }
                       onRemove={(productId) =>
-                        console.log("Remove:", productId)
+                        console.log('Remove:', productId)
                       }
                       productId={item.productId}
                     />
@@ -75,17 +75,13 @@ export const CartPage = () => {
 
                   {/* Cột 3: Tổng giá */}
                   <div className="text-right font-medium text-gray-500">
-                    {(item.price * item.quantity).toLocaleString("vi-VN")}₫
+                    {(item.price * item.quantity).toLocaleString('vi-VN')}₫
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-4 text-right">
-              <p className="text-gray-600">
-                Đã bao gồm: Phí ship sẽ được tính khi thanh toán
-              </p>
-            </div>
+            <div className="mt-4 text-right"></div>
           </div>
 
           {/* Cụm 2: Thanh toán */}
@@ -97,18 +93,18 @@ export const CartPage = () => {
               <div className="flex justify-between">
                 <span className="text-gray-600">Tổng tiền</span>
                 <span className="font-medium">
-                  {totalPrice.toLocaleString("vi-VN")} VNĐ
+                  {totalPrice.toLocaleString('vi-VN')} VNĐ
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Phí vận chuyển</span>
                 <span className="font-medium">
-                  {shippingFee.toLocaleString("vi-VN")} VNĐ
+                  {shippingFee.toLocaleString('vi-VN')} VNĐ
                 </span>
               </div>
               <div className="flex justify-between font-bold text-lg">
                 <span>Tổng thanh toán</span>
-                <span>{grandTotal.toLocaleString("vi-VN")} VNĐ</span>
+                <span>{grandTotal.toLocaleString('vi-VN')} VNĐ</span>
               </div>
             </div>
             <div className="flex justify-center mt-3">

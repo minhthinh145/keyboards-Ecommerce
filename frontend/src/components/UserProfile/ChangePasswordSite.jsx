@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { PasswordField } from "../../components/form/PasswordComponent/PasswordField.jsx";
 import { SubmitButton } from "../form/SubmitButton";
 import { OtpPopup } from "../form/PasswordComponent/OtpPopup";
-import { useChangePasswordFlow } from "../../hooks/AuthHooks/useChangePasswordFlow.js";
+import { useChangePasswordFlow } from "../../hooks/AuthPassword/useChangePasswordFlow.js";
 
 export const ChangePasswordSite = () => {
   const {
