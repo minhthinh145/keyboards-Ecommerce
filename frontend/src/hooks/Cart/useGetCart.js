@@ -1,13 +1,12 @@
-import { useState, useEffect, useContext } from "react";
-import { getCart } from "../../api/Cart/getCart";
-import { AuthContext } from "../../contexts/AuthContext";
-
+import { useState, useEffect, useContext } from 'react';
+import { getCart } from '../../api/Cart/getCart';
+import { useSelector } from 'react-redux';
 export const useCart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { getValidToken } = useContext(AuthContext);
+  const accessToken = useSelector((state) => state.auth.accessToken);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -33,7 +32,7 @@ export const useCart = () => {
     };
 
     fetchCart();
-  }, [getValidToken]);
+  }, [accessToken]);
 
   return { cartItems, totalPrice, loading, error };
 };

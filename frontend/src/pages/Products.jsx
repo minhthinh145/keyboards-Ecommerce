@@ -1,12 +1,12 @@
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import { FiFilter } from "react-icons/fi";
-import { Hero } from "../components/Hero.jsx";
-import { useState } from "react";
-import { MdExpandMore } from "react-icons/md";
-import { ProductCard } from "../components/ProductCard.jsx";
-import SortDropdown from "../components/button/SortDropdown.jsx";
-import { Loading } from "./Loading.jsx";
-import { useProducts } from "../hooks/useProducts.js";
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { FiFilter } from 'react-icons/fi';
+import { Hero } from '../components/Hero.jsx';
+import { useState } from 'react';
+import { MdExpandMore } from 'react-icons/md';
+import { ProductCard } from '../components/ProductCard.jsx';
+import SortDropdown from '../components/button/SortDropdown.jsx';
+import { Loading } from './Loading.jsx';
+import { useProducts } from '../hooks/useProducts.js';
 export const Products = () => {
   const handleSortChange = (value) => {
     // thực hiện fetch lại danh sách sản phẩm theo value
@@ -55,12 +55,12 @@ export const Products = () => {
             <button
               onClick={() => setToggle(!toggle)}
               className={`w-10 h-5 rounded-full relative cursor-pointer transition-colors duration-300 ${
-                toggle ? "bg-green-500" : "bg-gray-300"
+                toggle ? 'bg-green-500' : 'bg-gray-300'
               }`}
             >
               <div
                 className={`w-4 h-4 bg-white rounded-full absolute top-0.5 shadow transition-transform duration-300 ease-in-out ${
-                  toggle ? "translate-x-5" : "translate-x-0.5"
+                  toggle ? 'translate-x-5' : 'translate-x-0.5'
                 }`}
               />
             </button>

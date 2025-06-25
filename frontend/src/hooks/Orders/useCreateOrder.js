@@ -1,22 +1,18 @@
 import { useContext, useState } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
 import { createOrder } from '../../api/Order/createOrder';
+import { useSelector } from 'react-redux';
 
 export const useCreateOrder = (navigate) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { getValidToken } = useContext(AuthContext);
-
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const handleCreateOrder = async () => {
     try {
       setLoading(true);
-      const accessToken = await getValidToken();
       if (!accessToken) {
         throw new Error('No valid token found');
       }
-      console.log(accessToken);
       const result = await createOrder(accessToken);
-      console.log('createOrder response :', result);
       if (result?.id) {
         localStorage.setItem('latestOrderId', result.id);
         navigate('/payment');

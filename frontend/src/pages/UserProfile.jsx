@@ -1,16 +1,18 @@
-import { useState } from "react";
-import { useUserProfile } from "../hooks/userProfile.js";
-import { useFormState } from "../hooks/useFormState.js";
-import { useFormValidation } from "../hooks/useFormValidation.js";
-import { useFormSubmit } from "../hooks/useFormSubmit.js";
-import { SideBar } from "../components/UserProfile/SideBar.jsx";
-import { Loading } from "./Loading.jsx";
-import { UserInformation } from "../components/UserProfile/UserInformation.jsx";
-import { FormActionsWrapper } from "../components/UserProfile/FormActionsWrapper.jsx";
-import { ChangePasswordSite } from "../components/UserProfile/ChangePasswordSite.jsx";
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useFormState } from '../hooks/useFormState.js';
+import { useFormValidation } from '../hooks/useFormValidation.js';
+import { useFormSubmit } from '../hooks/useFormSubmit.js';
+import { SideBar } from '../components/UserProfile/SideBar.jsx';
+import { Loading } from './Loading.jsx';
+import { UserInformation } from '../components/UserProfile/UserInformation.jsx';
+import { FormActionsWrapper } from '../components/UserProfile/FormActionsWrapper.jsx';
+import { ChangePasswordSite } from '../components/UserProfile/ChangePasswordSite.jsx';
+
 export const UserProfile = () => {
-  const { user, loading, error } = useUserProfile();
-  const [activePage, setActivePage] = useState("profile");
+  // Lấy user và loading từ Redux store
+  const { user, loading, error } = useSelector((state) => state.auth);
+  const [activePage, setActivePage] = useState('profile');
 
   // Gọi các hook nhỏ
   const {
@@ -44,7 +46,7 @@ export const UserProfile = () => {
 
   const renderMainContent = () => {
     switch (activePage) {
-      case "profile":
+      case 'profile':
         return (
           <form
             onSubmit={async (e) => {
@@ -59,20 +61,20 @@ export const UserProfile = () => {
               errors={errors}
               toggleEditField={(field) => {
                 toggleEditField(field);
-                if (!editingFields[field]) updateErrors(field); // Cập nhật lỗi khi tắt chỉnh sửa
+                if (!editingFields[field]) updateErrors(field);
               }}
               handleInputChange={(e) => {
                 handleInputChange(e);
-                updateErrors(e.target.id); // Cập nhật lỗi khi nhập
+                updateErrors(e.target.id);
               }}
             />
           </form>
         );
-      case "security":
+      case 'security':
         return <ChangePasswordSite>Security Content</ChangePasswordSite>;
-      case "settings":
+      case 'settings':
         return <div>Settings Content</div>;
-      case "notifications":
+      case 'notifications':
         return <div>Notifications Content</div>;
       default:
         return <div>Profile Content</div>;
@@ -95,8 +97,7 @@ export const UserProfile = () => {
               Cài đặt tài khoản
             </h1>
             <div>
-              {renderMainContent()} {/* Render nội dung chính */}
-              {/* Hiển thị các nút khi có trường đang được chỉnh sửa */}
+              {renderMainContent()}
               <FormActionsWrapper
                 editingFields={editingFields}
                 isSubmitting={isSubmitting}

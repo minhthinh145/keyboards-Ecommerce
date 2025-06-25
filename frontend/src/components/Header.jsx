@@ -1,23 +1,23 @@
-import { DarkModeToggler } from "./button/DarkModeToggler.jsx";
-import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { CartControl } from "./Cart/CartControll.jsx";
-import { AuthContext } from "../contexts/AuthContext.jsx";
-import { FiUser } from "react-icons/fi";
+import { DarkModeToggler } from './button/DarkModeToggler.jsx';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { CartControl } from './Cart/CartControll.jsx';
+import { FiUser } from 'react-icons/fi';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Header = ({ isMenuOpen, setIsMenuOpen }) => {
   const darkMode = true;
   const navItems = [
-    { name: "Trang chủ", href: "/" },
-    { name: "Danh sách sản phẩm", href: "/products" },
-    { name: "Danh mục", href: "/categories" },
-    { name: "Liên hệ", href: "/contact" },
-    { name: "404Error", href: "/404" },
-    { name: "OTP", href: "/otp" },
-    { name: "Giỏ hàng", href: "/cart" },
-    { name: "Payment", href: "/payment" },
+    { name: 'Trang chủ', href: '/' },
+    { name: 'Danh sách sản phẩm', href: '/products' },
+    { name: 'Danh mục', href: '/categories' },
+    { name: 'Liên hệ', href: '/contact' },
+    { name: 'Giỏ hàng', href: '/cart' },
+    { name: 'Payment', href: '/payment' },
   ];
-  const { user, logout } = useContext(AuthContext);
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  console.log('User in Header:', user);
 
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-md">
@@ -61,7 +61,7 @@ export const Header = ({ isMenuOpen, setIsMenuOpen }) => {
                         <p className="font-semibold">Chỉnh sửa thông tin</p>
                       </Link>
                       <button
-                        onClick={logout}
+                        onClick={() => dispatch(logout())}
                         className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                       >
                         <p className="font-semibold">Đăng xuất</p>

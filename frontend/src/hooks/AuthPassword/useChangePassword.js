@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { AuthContext } from "../../contexts/AuthContext.jsx";
-import { useContext } from "react";
+import { useState } from 'react';
+import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 
 import {
   RequestChangePassword,
   ConfirmChangePassword,
-} from "../../api/auth/ChangePassword.js"; // Đường dẫn đến API của bạn
+} from '../../api/auth/ChangePassword.js'; // Đường dẫn đến API của bạn
 // Hook xử lý thay đổi mật khẩu
 export const useChangePassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
-  const { getValidToken } = useContext(AuthContext); // Lấy accessToken từ AuthContext
+  const accessToken = useSelector((state) => state.auth.accessToken);
 
   // Gửi yêu cầu thay đổi mật khẩu
   const handleRequestChangePassword = async (newPassword, confirmPassword) => {
@@ -39,8 +39,6 @@ export const useChangePassword = () => {
     setMessage(null);
 
     try {
-      const accessToken = await getValidToken(); // Lấy accessToken từ AuthContext
-
       const response = await ConfirmChangePassword(
         newPassword,
         OtpCode,

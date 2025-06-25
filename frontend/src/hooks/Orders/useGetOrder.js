@@ -1,12 +1,12 @@
 // hooks/useGetOrder.js
 import { useContext, useState } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useSelector } from 'react-redux';
 import { getOrder as fetchOrder } from '../../api/Order/getOrder';
 
 export const useGetOrder = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { getValidToken } = useContext(AuthContext);
+  const accessToken = useSelector((state) => state.auth.accessToken);
 
   const handleGetOrder = async (orderId) => {
     try {

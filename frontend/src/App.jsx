@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header.jsx';
@@ -13,7 +13,6 @@ import './index.css';
 import { Signin } from './pages/SignIn.jsx';
 import { Outlet } from 'react-router-dom';
 import { SignUp } from './pages/SignUp.jsx';
-import { AuthProvider } from './contexts/AuthContext';
 import { ToastProvider } from './contexts/ToastContext.jsx';
 import { UserProfile } from './pages/UserProfile.jsx';
 import { ErrorPages } from './pages/404Error.jsx';
@@ -22,11 +21,23 @@ import { OtpPopup } from './components/form/PasswordComponent/OtpPopup.jsx';
 import { CartComponent } from './components/Cart/CartComponent.jsx';
 import { CartPage } from './pages/CartPage.jsx';
 import { PaymentPage } from './pages/Payment.jsx';
+import { Provider } from 'react-redux';
+import { store } from './redux/store.js';
+import { fetchProfile } from './redux/slice/authSlice.js';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      dispatch(fetchProfile(accessToken)); // Lấy thông tin người dùng sau khi đăng nhập
+    }
+  }, [dispatch]);
   const products = [
     {
       id: 1,
@@ -72,7 +83,6 @@ function App() {
 
   return (
     <>
-      <AuthProvider>
         <ToastProvider>
           <Router>
             <ThemeProvider>
@@ -125,7 +135,6 @@ function App() {
             </ThemeProvider>
           </Router>
         </ToastProvider>
-      </AuthProvider>
     </>
   );
 }
