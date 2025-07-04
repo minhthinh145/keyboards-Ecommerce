@@ -14,7 +14,7 @@ export const getOrder = async (accessToken, orderId) => {
       },
     });
 
-    return response.data.result?.Data || null;
+    return response.data || null;
   } catch (error) {
     console.error('Lỗi khi lấy đơn hàng:', error);
     throw error;
