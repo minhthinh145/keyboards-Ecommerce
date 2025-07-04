@@ -23,32 +23,27 @@ namespace KeyBoard.Services.Implementations
             {
                 return ServiceResult.Failure("Lỗi user 404");
             }
-            var Cart = _mapper.Map<Cart>(cartDTO);
-            Cart.UserId = userId;
-            var existingCart = await _repo.GetCartItemAsync(userId, Cart.ProductId);
-            if (existingCart != null)
+            if (cartDTO.Quantity <= 0)
             {
-                // Nếu có, kiểm tra và cập nhật số lượng
-                if (existingCart.Quantity + cartDTO.Quantity > 0) // Đảm bảo không giảm số lượng dưới 1
-                {
-                    existingCart.Quantity += cartDTO.Quantity;
-                    await _repo.UpdateCartAsync(existingCart);
-                    return ServiceResult.Success("Cập nhật số lượng món trong giỏ hàng thành công");
-                }
-                else
-                {
-                    return ServiceResult.Failure("Số lượng sản phẩm không hợp lệ");
-                }
+                return ServiceResult.Failure("Số lượng sản phẩm phải lớn hơn 0");
+            }
+            var existingCart = await _repo.GetCartItemAsync(userId, cartDTO.ProductId);
+            if(existingCart != null)
+            {
+                existingCart.Quantity = cartDTO.Quantity;
+                await _repo.UpdateCartAsync(existingCart);
             }
             else
             {
-                Cart.Id = Guid.NewGuid();
-                Cart.CreatedAt = DateTime.UtcNow;
-                await _repo.AddToCartAsync(Cart);
-
-
+                //add a new item
+                var newCart = _mapper.Map<Cart>(cartDTO);
+                newCart.Id = Guid.NewGuid();
+                newCart.UserId = userId;
+                newCart.Quantity = cartDTO.Quantity;
+                await _repo.AddToCartAsync(newCart);
             }
-            return ServiceResult.Success("Thêm vào giỏ thành công");
+            var userCart = await GetCartItemsAsync(userId);
+            return ServiceResult.Success("Thêm sản phẩm vào giỏ hàng thành công", data: userCart);
         }
 
         public async Task<bool> ClearCartAsync(string userId)
@@ -69,7 +64,7 @@ namespace KeyBoard.Services.Implementations
             {
                 return new CartDTO();
             }
-           
+
             var items = _mapper.Map<List<CartItemDTO>>(listCart);
             var totalPrice = items.Sum(item => item.Price * item.Quantity);
 
@@ -81,29 +76,19 @@ namespace KeyBoard.Services.Implementations
             return CartDTO;
         }
 
-        public async Task<bool> RemoveFromCartAsync(string userId, Guid productId)
+        public async Task<ServiceResult> RemoveFromCartAsync(string userId, Guid productId)
         {
             var existingCart = await _repo.GetCartItemAsync(userId, productId);
             if (existingCart == null)
             {
-                return false;
+                return ServiceResult.Failure("Không tìm thấy hàng để xóa");
             }
             await _repo.RemoveFromCartAsync(existingCart);
-            return true;
+            var userCart = await GetCartItemsAsync(userId);
+            return ServiceResult.Success("Xóa khỏi giỏ hàng thành công" , data: userCart);
         }
 
-        public async Task<bool> UpdateCartAsync(CartItemDTO cartDTO, string userId)
-        {
-            var existingCart = await _repo.GetCartItemAsync(userId, cartDTO.ProductId);
-            if (existingCart == null)
-            {
-                return false;
-            }
-            existingCart.Quantity = cartDTO.Quantity;
-            await _repo.UpdateCartAsync(existingCart);
 
-            return true;
-        }
 
     }
 }

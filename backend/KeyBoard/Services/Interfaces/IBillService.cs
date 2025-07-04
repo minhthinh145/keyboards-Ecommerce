@@ -1,4 +1,4 @@
-﻿using KeyBoard.DTOs.HoaDonsDTOs;
+﻿using KeyBoard.DTOs.BillsDTOs;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,28 +8,28 @@ namespace KeyBoard.Services.Interfaces
     /// <summary>
     /// Interface định nghĩa các phương thức xử lý logic cho hóa đơn.
     /// </summary>
-    public interface IHoaDonService
+    public interface IBillService
     {
         /// <summary>
         /// Lấy danh sách hóa đơn theo User ID.
         /// </summary>
         /// <param name="userId">ID của người dùng</param>
         /// <returns>Danh sách hóa đơn</returns>
-        Task<List<HoaDonDTO>> GetHoaDonsByUserIdAsync(string userId);
+        Task<List<BillDTO>> GetBillsByUserIdAsync(string userId);
 
         /// <summary>
         /// Lấy thông tin hóa đơn theo ID.
         /// </summary>
         /// <param name="id">ID của hóa đơn</param>
         /// <returns>Thông tin hóa đơn</returns>
-        Task<HoaDonDTO> GetHoaDonByIdAsync(int id);
+        Task<BillDTO> GetBillByIdAsync(int id);
 
         /// <summary>
         /// Tạo hóa đơn từ Order ID.
         /// </summary>
         /// <param name="orderId">ID của đơn hàng</param>
         /// <returns>Mã hóa đơn được tạo</returns>
-        Task<int> CreateHoaDonFromOrderAsync(Guid orderId);
+        Task<int> CreateBillFromOrderAsync(Guid orderId);
 
         /// <summary>
         /// Cập nhật trạng thái thanh toán của hóa đơn.
@@ -45,6 +45,6 @@ namespace KeyBoard.Services.Interfaces
         /// </summary>
         /// <param name="maHd">Mã hóa đơn</param>
         /// <returns>Kết quả xóa (true nếu thành công, ngược lại false)</returns>
-        Task<bool> DeleteHoaDonByIdAsync(int maHd);
+        Task<bool> DeleteBillByIdAsync(int maHd);
     }
 }

@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 namespace KeyBoard.Data;
 
 public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-
 {
     public ApplicationDbContext()
     {
@@ -17,34 +16,26 @@ public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         : base(options)
     {
     }
+
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     public virtual DbSet<Cart> Carts { get; set; }
-
     public virtual DbSet<Category> Categories { get; set; }
-
-    public virtual DbSet<BillDetails> ChiTietHoaDons { get; set; }
-
-    public virtual DbSet<Bill> HoaDons { get; set; }
-
+    public virtual DbSet<BillDetails> BillDetails { get; set; }
+    public virtual DbSet<Bill> Bills { get; set; }
     public virtual DbSet<Order> Orders { get; set; }
-
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
-
     public virtual DbSet<Product> Products { get; set; }
-
     public virtual DbSet<TrangThai> TrangThais { get; set; }
-
     public DbSet<UserOTP> UserOtps { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-
     }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
+
         modelBuilder.Entity<Cart>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Cart__3214EC072DE3F400");
@@ -85,52 +76,58 @@ public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<BillDetails>(entity =>
         {
-            entity.HasKey(e => e.MaCt).HasName("PK__ChiTietH__27258E543E3B4AAD");
+                    entity.HasKey(e => e.BillDetailId).HasName("PK__BillDetails__27258E543E3B4AAD");
 
-            entity.ToTable("ChiTietHoaDon");
+            entity.ToTable("BillDetails");
 
-            entity.Property(e => e.DonGia).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.GiamGia).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.TenHh).HasMaxLength(255);
+            entity.Property(e => e.BillDetailId).HasColumnName("BillDetailId");
+            entity.Property(e => e.BillId).HasColumnName("BillId");
+            entity.Property(e => e.ProductId).HasColumnName("ProductId");
+            entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)").HasColumnName("UnitPrice");
+            entity.Property(e => e.Quantity).HasColumnName("Quantity");
+            entity.Property(e => e.Discount).HasColumnType("decimal(18, 2)").HasColumnName("Discount");
+            entity.Property(e => e.ProductName).HasMaxLength(255).HasColumnName("ProductName");
 
-            entity.HasOne(d => d.MaHdNavigation).WithMany(p => p.ChiTietHoaDons)
-                .HasForeignKey(d => d.MaHd)
+            entity.HasOne(d => d.Bill).WithMany(p => p.BillDetails)
+                .HasForeignKey(d => d.BillId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ChiTietHoa__MaHd__43D61337");
+                .HasConstraintName("FK__BillDetails__BillId__43D61337");
 
-            entity.HasOne(d => d.MaHhNavigation).WithMany(p => p.ChiTietHoaDons)
-                .HasForeignKey(d => d.MaHh)
+            entity.HasOne(d => d.Product).WithMany(p => p.BillDetails)
+                .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ChiTietHoa__MaHh__44CA3770");
+                .HasConstraintName("FK__BillDetails__ProductId__44CA3770");
         });
 
         modelBuilder.Entity<Bill>(entity =>
         {
-            entity.HasKey(e => e.MaHd).HasName("PK__HoaDon__2725A6C0938A0714");
+            entity.HasKey(e => e.BillId).HasName("PK__Bills__2725A6C0938A0714");
 
-            entity.ToTable("HoaDon");
+            entity.ToTable("Bills");
 
-            entity.Property(e => e.CachThanhToan).HasMaxLength(50);
-            entity.Property(e => e.CachVanChuyen).HasMaxLength(50);
-            entity.Property(e => e.DiaChi).HasMaxLength(500);
-            entity.Property(e => e.GhiChu).HasMaxLength(500);
-            entity.Property(e => e.HoTen).HasMaxLength(255);
-            entity.Property(e => e.NgayCan).HasColumnType("datetime");
-            entity.Property(e => e.NgayDat).HasColumnType("datetime");
-            entity.Property(e => e.NgayGiao).HasColumnType("datetime");
-            entity.Property(e => e.PhiVanChuyen).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.SoDienThoai).HasMaxLength(15);
-            entity.Property(e => e.UserId).HasMaxLength(450);
+            entity.Property(e => e.BillId).HasColumnName("BillId");
+            entity.Property(e => e.UserId).HasMaxLength(450).HasColumnName("UserId");
+            entity.Property(e => e.OrderDate).HasColumnType("datetime").HasColumnName("OrderDate");
+            entity.Property(e => e.ProcessedDate).HasColumnType("datetime").HasColumnName("ProcessedDate");
+            entity.Property(e => e.DeliveredDate).HasColumnType("datetime").HasColumnName("DeliveredDate");
+            entity.Property(e => e.FullName).HasMaxLength(255).HasColumnName("FullName");
+            entity.Property(e => e.Address).HasMaxLength(500).HasColumnName("Address");
+            entity.Property(e => e.PhoneNumber).HasMaxLength(15).HasColumnName("PhoneNumber");
+            entity.Property(e => e.PaymentMethod).HasMaxLength(50).HasColumnName("PaymentMethod");
+            entity.Property(e => e.ShippingMethod).HasMaxLength(50).HasColumnName("ShippingMethod");
+            entity.Property(e => e.ShippingFee).HasColumnType("decimal(18, 2)").HasColumnName("ShippingFee");
+            entity.Property(e => e.StatusId).HasColumnName("StatusId");
+            entity.Property(e => e.Notes).HasMaxLength(500).HasColumnName("Notes");
 
-            entity.HasOne(d => d.MaTrangThaiNavigation).WithMany(p => p.HoaDons)
-                .HasForeignKey(d => d.MaTrangThai)
+            entity.HasOne(d => d.Status).WithMany(p => p.Bills)
+                .HasForeignKey(d => d.StatusId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__HoaDon__MaTrangT__2BFE89A6");
+                .HasConstraintName("FK__Bills__StatusId__2BFE89A6");
 
-            entity.HasOne(d => d.User).WithMany(p => p.HoaDons)
+            entity.HasOne(d => d.User).WithMany(p => p.Bills)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__HoaDon__UserId__2B0A656D");
+                .HasConstraintName("FK__Bills__UserId__2B0A656D");
         });
 
         modelBuilder.Entity<Order>(entity =>
@@ -202,6 +199,7 @@ public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             entity.Property(e => e.MoTa).HasMaxLength(500);
             entity.Property(e => e.TenTrangThai).HasMaxLength(255);
         });
+
         modelBuilder.Entity<RefreshToken>(entity =>
         {
             entity.HasIndex(e => e.Token).IsUnique();
@@ -209,6 +207,7 @@ public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
                   .WithMany()
                   .HasForeignKey(e => e.UserId);
         });
+
         OnModelCreatingPartial(modelBuilder);
     }
 

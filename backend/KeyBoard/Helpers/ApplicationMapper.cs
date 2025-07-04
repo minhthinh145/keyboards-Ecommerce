@@ -1,7 +1,7 @@
 ﻿using KeyBoard.Data;
 using KeyBoard.DTOs;
 using AutoMapper;
-using KeyBoard.DTOs.HoaDonsDTOs;
+using KeyBoard.DTOs.BillsDTOs;
 using KeyBoard.DTOs.AuthenDTOs;
 namespace KeyBoard.Helpers
 {
@@ -27,8 +27,8 @@ namespace KeyBoard.Helpers
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.UtcNow));
             CreateMap<OrderDTO, Order>().ReverseMap();
             CreateMap<OrderDetailDTO, OrderDetail>().ReverseMap();
-            CreateMap<Bill, HoaDonDTO>().ReverseMap();
-            CreateMap<BillDetails, ChiTietHoaDonDTO>().ReverseMap();
+            CreateMap<Bill, BillDTO>().ReverseMap();
+            CreateMap<BillDetails, BillDetailDTO>().ReverseMap();
             CreateMap<ApplicationUser, UserProfileDTO>()
                 .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.PhoneNumber)) // Ánh xạ PhoneNumber -> Phone
                 .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => src.DateOfBirth))

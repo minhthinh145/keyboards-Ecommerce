@@ -5,21 +5,21 @@ namespace KeyBoard.Data;
 
 public partial class BillDetails
 {
-    public int MaCt { get; set; }
+    public int BillDetailId { get; set; }
 
-    public int MaHd { get; set; }
+    public int BillId { get; set; }
 
-    public Guid MaHh { get; set; }
+    public Guid ProductId { get; set; }
 
-    public decimal DonGia { get; set; }
+    public decimal UnitPrice { get; set; }
 
-    public int SoLuong { get; set; }
+    public int Quantity { get; set; }
 
-    public decimal GiamGia { get; set; }
+    public decimal Discount { get; set; }
 
-    public string TenHh { get; set; } = null!;
+    public string ProductName { get; set; } = null!;
 
-    public virtual Bill MaHdNavigation { get; set; } = null!;
+    public virtual Bill Bill { get; set; } = null!;
 
-    public virtual Product MaHhNavigation { get; set; } = null!;
+    public virtual Product Product { get; set; } = null!;
 }

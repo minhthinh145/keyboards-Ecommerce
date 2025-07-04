@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using KeyBoard.DTOs.HoaDonsDTOs;
+using KeyBoard.DTOs.BillsDTOs;
 using KeyBoard.DTOs.VNPayDTOs;
 using KeyBoard.Helpers;
 using KeyBoard.Repositories.Interfaces;
@@ -11,10 +11,10 @@ namespace KeyBoard.Services.VNPayServices
     public class VNPayServices : IVNPayService
     {
         private readonly IConfiguration _config;
-        private readonly IHoaDonRepository _hoadon;
+        private readonly IBillRepository _hoadon;
         private readonly IMapper _mapper;
 
-        public VNPayServices(IConfiguration config, IHoaDonRepository hoadon, IMapper mapper)
+        public VNPayServices(IConfiguration config, IBillRepository hoadon, IMapper mapper)
         {
             _config = config;
             _hoadon = hoadon;
@@ -26,15 +26,15 @@ namespace KeyBoard.Services.VNPayServices
         /// </summary>  
         public async Task<string> CreatePaymentUrl(int maHD, HttpContext context)
         {
-            var hoadon = await _hoadon.GetHoaDonByIdAsync(maHD);
+            var hoadon = await _hoadon.GetBillByIdAsync(maHD);
             if (hoadon == null) throw new Exception("Hóa đơn không tồn tại");
-            var hoadonDTO = _mapper.Map<HoaDonDTO>(hoadon);
-            double tongTien = Convert.ToDouble(hoadonDTO.ChiTietHoaDons.Sum(ct => ct.SoLuong * ct.DonGia));
+            var hoadonDTO = _mapper.Map<BillDTO>(hoadon);
+            double tongTien = Convert.ToDouble(hoadonDTO.BillDetails.Sum(ct => ct.Quantity * ct.UnitPrice));
             //tạo model cho request
             var model = new VNPayRequestDTO
             {
                 Amount = tongTien,
-                MaHd = hoadon.MaHd
+                MaHd = hoadon.BillId
             };
             var tick = DateTime.Now.Ticks.ToString();
 

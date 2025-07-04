@@ -10,7 +10,7 @@ namespace KeyBoard.Data
         public string Address { get; set; } = string.Empty;
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
         public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
-        public virtual ICollection<Bill> HoaDons { get; set; } = new List<Bill>();
+        public virtual ICollection<Bill> Bills { get; set; } = new List<Bill>();
 
     }
 }

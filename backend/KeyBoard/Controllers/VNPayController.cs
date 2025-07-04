@@ -10,10 +10,10 @@ namespace KeyBoard.Controllers
     [ApiController]
     public class VNPayController : ControllerBase
     {
-        private readonly IHoaDonRepository _hoadon;
+        private readonly IBillRepository _hoadon;
         private readonly IVNPayService _vnPayService;
 
-        public VNPayController(IVNPayService vnPayService , IHoaDonRepository hoadon)
+        public VNPayController(IVNPayService vnPayService , IBillRepository hoadon)
         {
             _hoadon = hoadon;
             _vnPayService = vnPayService;

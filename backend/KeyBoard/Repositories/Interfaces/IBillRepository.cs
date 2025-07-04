@@ -2,24 +2,24 @@
 
 namespace KeyBoard.Repositories.Interfaces
 {
-    public interface IHoaDonRepository
+    public interface IBillRepository
     {
         // Lấy hóa đơn theo ID
-        Task<Bill?> GetHoaDonByIdAsync(int maHd);
+        Task<Bill?> GetBillByIdAsync(int billId);
 
         // Lấy danh sách hóa đơn của một User
-        Task<IEnumerable<Bill>> GetHoaDonsByUserAsync(string userId);
+        Task<IEnumerable<Bill>> GetBillsByUserAsync(string userId);
 
         // Cập nhật trạng thái thanh toán
-        Task<bool> UpdatePaymentStatusAsync(int maHd, int trangThai, DateTime ngayGiao);
+        Task<bool> UpdatePaymentStatusAsync(int billId, int status, DateTime deliveredDate);
 
-        // Xóa hóa đơn theo mã hóa đơn
-        Task<bool> DeleteHoaDonByIdAsync(int maHd);
+        // Xóa hóa đơn theo ID hóa đơn
+        Task<bool> DeleteBillByIdAsync(int billId);
 
         // Lấy đơn hàng từ database theo orderId (để Service xử lý logic)
         Task<Order?> GetOrderWithDetailsAsync(Guid orderId);
 
         // Thêm hóa đơn vào database
-        Task<int> AddHoaDonAsync(Bill hoadon);
+        Task<int> AddBillAsync(Bill bill);
     }
 }

@@ -11,5 +11,5 @@ public partial class TrangThai
 
     public string? MoTa { get; set; }
 
-    public virtual ICollection<Bill> HoaDons { get; set; } = new List<Bill>();
+    public virtual ICollection<Bill> Bills { get; set; } = new List<Bill>();
 }

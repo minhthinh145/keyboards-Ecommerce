@@ -127,9 +127,9 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
-builder.Services.AddScoped<IHoaDonRepository, HoaDonRepository>();
+builder.Services.AddScoped<IBillRepository, BillRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-builder.Services.AddScoped<IChiTietHoaDonRepository, ChiTietHoaDonRepository>();
+builder.Services.AddScoped<IBillDetailRepository, BillDetailRepository>();
 builder.Services.AddScoped<IUserOtpRepository, UserOtpRepository>();
 
 //đăng ký scoped phần services
@@ -139,8 +139,8 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddScoped<IOrderDetailsService, OrderDetailsService>();
-builder.Services.AddScoped<IChiTietHoaDonService, ChiTietHoaDonService>();
-builder.Services.AddScoped<IHoaDonService, HoaDonService>();
+builder.Services.AddScoped<IBillDetailService, BillDetailService>();
+builder.Services.AddScoped<IBillService, BillService>();
 builder.Services.AddScoped<IVNPayService, VNPayServices>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IFirebaseStorageService, FirebaseStorageService>();

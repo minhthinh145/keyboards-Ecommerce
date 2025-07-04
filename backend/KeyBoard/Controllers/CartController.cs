@@ -52,28 +52,9 @@ namespace KeyBoard.Controllers
             return Ok(result);
         }
 
-        //update
-        [HttpPut("update")]
-        [Authorize]
-        public async Task<IActionResult> UpdateCart([FromBody] CartItemDTO cartDTO)
-        {
-            var userId = GetUserIdFromToken();
-            if (userId == null)
-            {
-                return Unauthorized(new { message = "Bạn cần đăng nhập để cập nhật giỏ hàng" });
-            }
-            var result = await _service.UpdateCartAsync(cartDTO,userId);
-            if (!result) 
-            {
-                return BadRequest(new { message = "Không thể cập nhật giỏ hàng" });
-            }
-            return Ok(new { message = "Giỏ hàng đã được cập nhật" });
-        }
-
-
         //delete
         [Authorize]
-        [HttpDelete("{userId}/{productId}")]
+        [HttpDelete("{productId}")]
         public async Task<IActionResult> RemoveFromCart(Guid productId)
         {
             var userId = GetUserIdFromToken();
@@ -83,11 +64,11 @@ namespace KeyBoard.Controllers
             }
 
             var result = await _service.RemoveFromCartAsync(userId, productId);
-            if (!result)
+            if (!result.IsSuccess)
             {
-                return BadRequest(new { message = "Không thể xóa sản phẩm khỏi giỏ hàng" });
+                return BadRequest(result.Message);
             }
-            return Ok(new { message = "Sản phẩm đã được xóa khỏi giỏ hàng" });
+            return Ok(result);
         }
 
         //Clear
