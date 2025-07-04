@@ -1,21 +1,26 @@
-import axios from "axios";
+import axios from 'axios';
 
-export const addToCart = async (cartItem, token) => {
+export const addToCart = async (accessToken, productId, quantity) => {
   const VITE_API_URL = import.meta.env.VITE_API_URL;
   const BASE_URL = `${VITE_API_URL}/api/Cart/add`;
+
+  const cartDTO = {
+    productId: productId,
+    quantity: quantity,
+  };
   try {
-    console.log("token", token);
-    const response = await axios.post(BASE_URL, cartItem, {
+    const response = await axios.post(BASE_URL, cartDTO, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
     });
     return response.data;
   } catch (error) {
     console.error(
-      "Có lỗi khi thêm sản phẩm vào giỏ hàng:",
+      'Có lỗi khi thêm sản phẩm vào giỏ hàng:',
       error.response?.data
     );
-    throw error.response?.data || "Failed to add product to cart";
+    throw error.response?.data || 'Failed to add product to cart';
   }
 };

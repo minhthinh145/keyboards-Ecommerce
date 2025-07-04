@@ -1,17 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useCart } from "../../hooks/Cart/useGetCart";
-import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
-import { CartComponent } from "./CartComponent";
+import React, { useState, useRef, useEffect } from 'react';
+import { FiShoppingCart, FiMenu, FiX } from 'react-icons/fi';
+import { CartComponent } from './CartComponent';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const CartControl = ({ isMenuOpen, setIsMenuOpen }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartRef = useRef(null);
-
-  const { cartItems, totalPrice, loading, error } = useCart();
-  const cartCount = Array.isArray(cartItems)
-    ? cartItems.reduce((sum, item) => sum + item.quantity, 0)
-    : 0;
-  console.log("cartitem", cartItems);
+  const dispatch = useDispatch();
+  const { items, totalItems, loading } = useSelector((state) => state.cart);
   // Xử lý nhấn ra ngoài để đóng giỏ hàng
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -19,9 +15,9 @@ export const CartControl = ({ isMenuOpen, setIsMenuOpen }) => {
       if (
         cartRef.current &&
         !cartRef.current.contains(event.target) &&
-        !event.target.closest(".cart-button")
+        !event.target.closest('.cart-button')
       ) {
-        console.log("Closing cart due to outside click");
+        console.log('Closing cart due to outside click');
         setIsCartOpen(false);
       }
     };
@@ -29,24 +25,19 @@ export const CartControl = ({ isMenuOpen, setIsMenuOpen }) => {
     if (isCartOpen) {
       // Thêm listener sau một khoảng nhỏ để tránh kích hoạt ngay
       const timeout = setTimeout(() => {
-        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener('mousedown', handleClickOutside);
       }, 0);
 
       return () => {
         clearTimeout(timeout);
-        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener('mousedown', handleClickOutside);
       };
     }
   }, [isCartOpen]);
 
   // Xử lý bấm nút giỏ hàng
   const handleCartToggle = () => {
-    console.log("Cart button clicked, current isCartOpen:", isCartOpen);
-    setIsCartOpen((prev) => {
-      const newState = !prev;
-      console.log("New isCartOpen:", newState);
-      return newState;
-    });
+    setIsCartOpen((prev) => !prev);
   };
 
   return (
@@ -58,16 +49,18 @@ export const CartControl = ({ isMenuOpen, setIsMenuOpen }) => {
             <button
               onClick={handleCartToggle}
               className="relative focus:outline-none cart-button"
+              aria-label="Giỏ hàng"
             >
               <FiShoppingCart className="h-6 w-6 text-gray-700 dark:text-white" />
               <span className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs">
-                {cartCount}
+                {totalItems}
               </span>
             </button>
           </div>
           <button
             className="md:hidden focus:outline-none"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Menu"
           >
             {isMenuOpen ? (
               <FiX className="h-6 w-6 text-gray-700 dark:text-white" />
@@ -81,8 +74,8 @@ export const CartControl = ({ isMenuOpen, setIsMenuOpen }) => {
         <div
           className={`fixed inset-0 z-40 transition-opacity duration-200 ${
             isCartOpen
-              ? "bg-black/40 opacity-200"
-              : "opacity-0 pointer-events-none"
+              ? 'bg-black/40 opacity-200'
+              : 'opacity-0 pointer-events-none'
           }`}
         />
 
@@ -90,17 +83,10 @@ export const CartControl = ({ isMenuOpen, setIsMenuOpen }) => {
         <div
           ref={cartRef}
           className={`fixed top-0 right-0 z-50  h-full w-160 transition-transform duration-300 transform ${
-            isCartOpen ? "translate-x-0" : "translate-x-full"
+            isCartOpen ? 'translate-x-0' : 'translate-x-full'
           }   `}
         >
-          <CartComponent
-            items={cartItems}
-            onRemove={() => {}}
-            onQuantityChange={() => {}}
-            isOpen={isCartOpen}
-            setIsOpen={setIsCartOpen}
-            totalPrice={totalPrice}
-          />
+          <CartComponent isOpen={isCartOpen} setIsOpen={setIsCartOpen} />
         </div>
       </div>
     </>
