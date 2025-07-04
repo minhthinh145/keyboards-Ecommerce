@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { signup } from "../api/auth/singup.js";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { signup } from '../api/auth/singup.js';
+import { useNavigate } from 'react-router-dom';
 
 export const useUserSignUp = () => {
   const [loading, setLoading] = useState(false);
@@ -28,18 +28,18 @@ export const useUserSignUp = () => {
         confirmPassword
       );
       if (response) {
-        navigate("/signin");
+        navigate('/signin');
       }
     } catch (err) {
-      setError(err.message || "Đăng ký thất bại");
-      console.error("Signup error:", err);
+      setError(err.message || 'Đăng ký thất bại');
+      console.error('Signup error:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  return {      
-    signUpUser, // Export the function as signUpUser
+  return {
+    signUpUser, 
     loading,
     error,
   };

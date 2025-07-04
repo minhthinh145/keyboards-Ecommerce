@@ -1,14 +1,33 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { EmailInput } from "../components/form/EmailInput.jsx";
-import { HiLockClosed } from "react-icons/hi";
-import { PasswordInput } from "../components/form/PasswordInput.jsx";
-import { SubmitButton } from "../components/form/SubmitButton.jsx";
-import { FingerprintLogin } from "../components/form/FingerprintLogin.jsx";
-import { Sidebar } from "../components/form/AuthSideBar.jsx";
-import { UserLogin } from "../hooks/userLogin.js";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { EmailInput } from '../components/form/EmailInput.jsx';
+import { HiLockClosed } from 'react-icons/hi';
+import { PasswordInput } from '../components/form/PasswordInput.jsx';
+import { SubmitButton } from '../components/form/SubmitButton.jsx';
+import { FingerprintLogin } from '../components/form/FingerprintLogin.jsx';
+import { Sidebar } from '../components/form/AuthSideBar.jsx';
+import { useDispatch } from 'react-redux';
+import { login } from '@/redux/slice/authSlice.js';
+import { useToast } from '../contexts/ToastContext.jsx';
+
 export const Signin = () => {
-  const { email, password, setEmail, setPassword, handleLogin } = UserLogin();
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const { showToast } = useToast();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const resultAction = await dispatch(login({ email, password }));
+    if (login.fulfilled.match(resultAction)) {
+      // Đăng nhập thành công, chuyển hướng đến trang chính
+      showToast('Đăng nhập thành công', 'success');
+      navigate('/');
+    } else {
+      // Đăng nhập thất bại, hiển thị thông báo lỗi
+      showToast('Sai email hoặc mật khẩu', 'error');
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-indigo-50 px-16 py-16">
@@ -61,7 +80,7 @@ export const Signin = () => {
               </Link>
             </div>
           </form>
-        </div> 
+        </div>
       </div>
     </div>
   );

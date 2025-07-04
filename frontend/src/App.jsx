@@ -83,58 +83,59 @@ function App() {
 
   return (
     <>
-        <ToastProvider>
-          <Router>
-            <ThemeProvider>
-              <Routes>
-                {/* Layout có Header/Footer */}
+      <ToastProvider>
+        <Router>
+          <ThemeProvider>
+            <Routes>
+              {/* Layout có Header/Footer */}
+              <Route
+                element={
+                  <div
+                    className={`min-h-screen ${
+                      isDarkMode ? 'dark' : ''
+                    } bg-white dark:bg-gray-900 transition-colors dark:text-white duration-300`}
+                  >
+                    <Header
+                      isDarkMode={isDarkMode}
+                      toggleDarkMode={toggleDarkMode}
+                      isMenuOpen={isMenuOpen}
+                      setIsMenuOpen={setIsMenuOpen}
+                      cartCount={cartCount}
+                    />
+                    <Outlet />
+                    <Footer />
+                  </div>
+                }
+              >
                 <Route
+                  path="/"
                   element={
-                    <div
-                      className={`min-h-screen ${
-                        isDarkMode ? 'dark' : ''
-                      } bg-white dark:bg-gray-900 transition-colors dark:text-white duration-300`}
-                    >
-                      <Header
-                        isDarkMode={isDarkMode}
-                        toggleDarkMode={toggleDarkMode}
-                        isMenuOpen={isMenuOpen}
-                        setIsMenuOpen={setIsMenuOpen}
-                        cartCount={cartCount}
-                      />
-                      <Outlet /> {/* Đây là chỗ render các component con */}
-                      <Footer />
-                    </div>
+                    <>
+                      <Hero />
+                      <FeaturedProducts products={products} />
+                      <Catogories categories={categories} />
+                    </>
                   }
-                >
-                  <Route
-                    path="/"
-                    element={
-                      <>
-                        <Hero />
-                        <FeaturedProducts products={products} />
-                        <Catogories categories={categories} />
-                      </>
-                    }
-                  />
-                  <Route path="/product/:id" element={<ProductsDetails />} />
-                  <Route path="/products" element={<Products />} />
-                  <Route path="/userprofile" element={<UserProfile />} />
-                  <Route path="/404" element={<ErrorPages />} />
-                  <Route path="/otp" element={<OtpPopup />} />
-                  <Route path="/cart" element={<CartPage />} />
-                </Route>
+                />
+                <Route path="/product/:id" element={<ProductsDetails />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/userprofile" element={<UserProfile />} />
+                <Route path="/404" element={<ErrorPages />} />
+                <Route path="/otp" element={<OtpPopup />} />
+                <Route path="/cart" element={<CartPage />} />
 
-                {/* Layout KHÔNG có Header/Footer */}
-                <Route path="/signin" element={<Signin />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/loading" element={<Loading />} />
-                <Route path="/cart" element={<CartComponent />} />
-                <Route path="/payment" element={<PaymentPage />} />
-              </Routes>
-            </ThemeProvider>
-          </Router>
-        </ToastProvider>
+                {/* Fallback */}
+              </Route>
+              {/* Layout KHÔNG có Header/Footer */}
+              <Route path="/signin" element={<Signin />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/loading" element={<Loading />} />
+              <Route path="/payment/:orderId" element={<PaymentPage />} />
+              <Route path="/payment" element={<PaymentPage />} />{' '}
+            </Routes>
+          </ThemeProvider>
+        </Router>
+      </ToastProvider>
     </>
   );
 }
