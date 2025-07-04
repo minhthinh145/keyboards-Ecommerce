@@ -13,4 +13,3 @@ export const ProductCard = ({ product }) => (
       </p>
     </div>
   );
-  

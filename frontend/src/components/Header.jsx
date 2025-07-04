@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { CartControl } from './Cart/CartControll.jsx';
 import { FiUser } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '@/redux/slice/authSlice.js';
 
 export const Header = ({ isMenuOpen, setIsMenuOpen }) => {
   const darkMode = true;
@@ -16,9 +17,8 @@ export const Header = ({ isMenuOpen, setIsMenuOpen }) => {
     { name: 'Payment', href: '/payment' },
   ];
   const user = useSelector((state) => state.auth.user);
+  const cartCount = useSelector((state) => state.cart.totalItems);
   const dispatch = useDispatch();
-  console.log('User in Header:', user);
-
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
