@@ -96,12 +96,18 @@ export const LeftSide = ({ user, order }) => {
       </div>
 
       {/* Thanh toán */}
-      <div className=" p-4 rounded  w-full">
+      <div className="p-4 rounded  w-full">
         <h2 className="font-semibold text-lg mb-4">Thanh toán</h2>
 
         <div className="flex flex-col gap-3">
           {/* COD */}
-          <label className="flex items-center gap-3 p-3 rounded border border-blue-400 bg-blue-50 cursor-pointer">
+          <label
+            className={`flex items-center gap-3 p-3 rounded border cursor-pointer transition-all ${
+              paymentMethod === 'cod'
+                ? 'border-blue-400 bg-blue-50'
+                : 'border-gray-300 hover:bg-gray-50'
+            }`}
+          >
             <input
               type="radio"
               name="payment"
@@ -121,7 +127,13 @@ export const LeftSide = ({ user, order }) => {
           </label>
 
           {/* VNPay */}
-          <label className="flex items-center gap-3 p-3 rounded border border-gray-300 cursor-pointer hover:bg-gray-50">
+          <label
+            className={`flex items-center gap-3 p-3 rounded border cursor-pointer transition-all ${
+              paymentMethod === 'vnpay'
+                ? 'border-blue-400 bg-blue-50'
+                : 'border-gray-300 hover:bg-gray-50'
+            }`}
+          >
             <input
               type="radio"
               name="payment"
@@ -133,7 +145,11 @@ export const LeftSide = ({ user, order }) => {
             <div className="flex-1">
               <div className="flex items-center justify-between">
                 <span className="font-medium">VNPay</span>
-                <span className="text-blue-600">🏦</span>
+                <img
+                  src="https://cdn.brandfetch.io/vnpay.vn/w/400/h/400/logo"
+                  alt="VNPay Logo"
+                  className="w-8 h-8 object-contain"
+                />
               </div>
             </div>
           </label>

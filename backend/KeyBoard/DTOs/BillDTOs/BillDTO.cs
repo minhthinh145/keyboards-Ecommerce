@@ -1,6 +1,6 @@
 ﻿using KeyBoard.Data;
 
-namespace KeyBoard.DTOs.BillsDTOs
+namespace KeyBoard.DTOs.BillDTOs
 {
     public class BillDTO
     {

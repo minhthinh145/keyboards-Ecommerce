@@ -1,4 +1,4 @@
-﻿using KeyBoard.DTOs.BillsDTOs;
+﻿using KeyBoard.DTOs.BillDTOs;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

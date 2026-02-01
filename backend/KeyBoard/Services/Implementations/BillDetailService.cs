@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using KeyBoard.Data;
 using KeyBoard.DTOs;
-using KeyBoard.DTOs.BillsDTOs;
+using KeyBoard.DTOs.BillDTOs;
 using KeyBoard.Repositories.Interfaces;
 using KeyBoard.Services.Interfaces;
 

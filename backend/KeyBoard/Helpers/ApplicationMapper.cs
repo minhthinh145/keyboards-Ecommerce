@@ -1,7 +1,7 @@
 ﻿using KeyBoard.Data;
 using KeyBoard.DTOs;
 using AutoMapper;
-using KeyBoard.DTOs.BillsDTOs;
+using KeyBoard.DTOs.BillDTOs;
 using KeyBoard.DTOs.AuthenDTOs;
 namespace KeyBoard.Helpers
 {

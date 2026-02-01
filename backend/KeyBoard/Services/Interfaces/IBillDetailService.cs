@@ -1,4 +1,4 @@
-﻿using KeyBoard.DTOs.BillsDTOs;
+﻿using KeyBoard.DTOs.BillDTOs;
 
 namespace KeyBoard.Services.Interfaces
 {

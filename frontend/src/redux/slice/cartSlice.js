@@ -39,23 +39,23 @@ export const addToCart = createAsyncThunk(
   }
 );
 
-export const removeFromCart = createAsyncThunk(
-  'cart/removeFromCart',
-  async (productId, { getState, rejectWithValue }) => {
-    try {
-      const { auth } = getState();
-      if (!auth.accessToken) {
-        throw new Error('Bạn chưa đăng nhập');
+  export const removeFromCart = createAsyncThunk(
+    'cart/removeFromCart',
+    async (productId, { getState, rejectWithValue }) => {
+      try {
+        const { auth } = getState();
+        if (!auth.accessToken) {
+          throw new Error('Bạn chưa đăng nhập');
+        }
+        await removeFromCartApi(auth.accessToken, productId);
+        return productId;
+      } catch (error) {
+        return rejectWithValue(
+          error.response?.data || 'Lỗi khi xóa sản phẩm khỏi giỏ hàng'
+        );
       }
-      await removeFromCartApi(auth.accessToken, productId);
-      return productId;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data || 'Lỗi khi xóa sản phẩm khỏi giỏ hàng'
-      );
     }
-  }
-);
+  );
 
 const initialState = {
   items: [],

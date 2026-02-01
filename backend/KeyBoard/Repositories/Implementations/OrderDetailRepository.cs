@@ -29,7 +29,7 @@ namespace KeyBoard.Repositories.Implementations
             return orderDetail;
         }
 
-        public async Task<List<OrderDetail>> GetOrderDetailsByOrderIdAsync(Guid orderId)
+        public async Task<List<OrderDetail>>    GetOrderDetailsByOrderIdAsync(Guid orderId)
         {
             var orderDetails = await _context.OrderDetails
                 .Where(od => od.OrderId == orderId)
@@ -44,7 +44,7 @@ namespace KeyBoard.Repositories.Implementations
             _context.OrderDetails.Remove(oderdetail);
             var saved = await _context.SaveChangesAsync();
             return saved > 0;
-        }
+        }   
 
         public async Task<bool> UpdateOrderDetailAsync(OrderDetail orderDetail)
         {
