@@ -7,6 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrder } from '@/redux/slice/orderSlice';
 
 export const PaymentPage = () => {
+  {
+    /* This component handles the payment page, displaying order details and user information. */
+  }
   const { orderId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();

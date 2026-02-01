@@ -1,4 +1,4 @@
-﻿namespace KeyBoard.DTOs.BillsDTOs
+﻿namespace KeyBoard.DTOs.BillDTOs
 {
     public class BillDetailDTO
     {

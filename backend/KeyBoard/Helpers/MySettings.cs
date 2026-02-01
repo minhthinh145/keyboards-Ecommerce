@@ -1,4 +1,6 @@
-﻿namespace KeyBoard.Helpers
+﻿using System.CodeDom;
+
+namespace KeyBoard.Helpers
 {
     public static class MySettings
     {
@@ -21,4 +23,5 @@
             return Statuses.Contains(status);
         }
     }
+   
 }

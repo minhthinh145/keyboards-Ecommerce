@@ -26,6 +26,8 @@ import { store } from './redux/store.js';
 import { fetchProfile } from './redux/slice/authSlice.js';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { TestQLNhanSu } from './pages/TestQLNhanSu.jsx';
+import { Test } from './pages/Test';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -132,6 +134,8 @@ function App() {
               <Route path="/loading" element={<Loading />} />
               <Route path="/payment/:orderId" element={<PaymentPage />} />
               <Route path="/payment" element={<PaymentPage />} />{' '}
+              <Route path="/test" element={<Test />} />
+              <Route path="testns" element={<TestQLNhanSu />} />
             </Routes>
           </ThemeProvider>
         </Router>

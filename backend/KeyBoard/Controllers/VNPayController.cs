@@ -13,7 +13,7 @@ namespace KeyBoard.Controllers
         private readonly IBillRepository _hoadon;
         private readonly IVNPayService _vnPayService;
 
-        public VNPayController(IVNPayService vnPayService , IBillRepository hoadon)
+        public VNPayController(IVNPayService vnPayService, IBillRepository hoadon)
         {
             _hoadon = hoadon;
             _vnPayService = vnPayService;
@@ -23,18 +23,18 @@ namespace KeyBoard.Controllers
         /// </summary>
         [Authorize(Roles = ApplicationRole.Customer)]
         [HttpPost("create-payment-url/{maHD}")]
-        public async Task<IActionResult> CreatePaymentUrl([FromBody] int maHD)
+        public async Task<IActionResult> CreatePaymentUrl([FromRoute] int maHD)
         {
 
             var paymentUrl = await _vnPayService.CreatePaymentUrl(maHD, HttpContext);
-           
+
             return Ok(new { url = paymentUrl });
         }
 
         [HttpGet("vnpay-return")]
         public IActionResult ProcessPaymentResponse()
         {
-         
+
             if (HttpContext.Request.Query.Count == 0)
             {
                 return BadRequest("Query parameters are missing.");
@@ -45,7 +45,7 @@ namespace KeyBoard.Controllers
                 var response = _vnPayService.ProcessPaymentResponse(HttpContext.Request.Query);
                 return Ok(response);
             }
-            catch 
+            catch
             {
                 return BadRequest("Lỗi xử lý phản hồi thanh toán.");
             }

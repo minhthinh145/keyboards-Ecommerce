@@ -150,6 +150,10 @@ builder.Services.AddScoped<ISendSmsService, SendSmsService>();
 //Scoped Service Auth
 builder.Services.AddScoped<IUserOtpService, UserOtpService>();
 builder.Services.AddScoped<IChangePasswordService, ChangePasswordService>();
+
+// Thêm HttpClient
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -172,7 +176,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "KeyBoard API V1");
-    c.RoutePrefix = "swagger"; // Đảm bảo đường dẫn là /swagger
+    c.RoutePrefix = "swagger"; 
 });
 app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();

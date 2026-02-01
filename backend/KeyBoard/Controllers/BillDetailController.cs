@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using KeyBoard.DTOs.BillsDTOs;
+using KeyBoard.DTOs.BillDTOs;
 using KeyBoard.Helpers;
 using KeyBoard.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;

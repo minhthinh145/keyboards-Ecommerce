@@ -48,7 +48,7 @@ namespace KeyBoard.Controllers
             }
         }
 
-        [Authorize(Roles = ApplicationRole.Admin)]
+        [Authorize(Roles = ApplicationRole.Customer)]
         [HttpPost("create-from-order/{orderId}")]
         public async Task<IActionResult> CreateBillFromOrder(Guid orderId)
         {
