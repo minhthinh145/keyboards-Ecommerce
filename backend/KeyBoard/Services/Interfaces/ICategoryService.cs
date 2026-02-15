@@ -15,7 +15,7 @@ namespace KeyBoard.Services.Interfaces
         /// Lấy danh mục theo ID.
         /// </summary>
         /// <param name="id">ID của danh mục.</param>
-        /// <returns>CategoryDTO nếu tìm thấy, ngược lại trả về null.</returns>
+        /// <returns>CategoryDTO nếu tìm thấy, n2gược lại trả về null.</returns>
         Task<CategoryDTO> GetCategoryByIdAsync(Guid id);
 
         /// <summary>

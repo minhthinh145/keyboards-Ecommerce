@@ -1,0 +1,27 @@
+version: '3.8'
+
+# Docker Compose for development - chỉ chạy database
+# Backend và Frontend chạy local để hot-reload
+
+services:
+  # SQL Server Database
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: keyboardstore-db-dev
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=KeyBoard@123456
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data_dev:/var/opt/mssql
+    networks:
+      - keyboardstore-network-dev
+
+networks:
+  keyboardstore-network-dev:
+    driver: bridge
+
+volumes:
+  sqlserver_data_dev:

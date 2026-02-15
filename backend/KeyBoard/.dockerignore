@@ -1,0 +1,12 @@
+**/.dockerignore
+**/.git
+**/.gitignore
+**/.vs
+**/.vscode
+**/bin
+**/obj
+**/Dockerfile*
+**/docker-compose*
+**/*.user
+**/*.md
+**/appsettings.Development.json

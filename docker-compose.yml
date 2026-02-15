@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # SQL Server Database
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: keyboardstore-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=KeyBoard@123456
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - keyboardstore-network
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "KeyBoard@123456" -C -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend/KeyBoard
+      dockerfile: Dockerfile
+    container_name: keyboardstore-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=db;Database=KeyboardStore;User Id=sa;Password=KeyBoard@123456;TrustServerCertificate=True;
+    ports:
+      - "5066:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - keyboardstore-network
+    restart: unless-stopped
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: keyboardstore-web
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - keyboardstore-network
+    restart: unless-stopped
+
+networks:
+  keyboardstore-network:
+    driver: bridge
+
+volumes:
+  sqlserver_data:

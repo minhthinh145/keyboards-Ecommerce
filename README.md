@@ -9,6 +9,7 @@ Dự án website thương mại điện tử bán bàn phím cơ, được xây 
 - [Tính năng](#tính-năng)
 - [Cấu trúc dự án](#cấu-trúc-dự-án)
 - [Cài đặt và Chạy](#cài-đặt-và-chạy)
+- [Docker](#docker)
 - [API Documentation](#api-documentation)
 - [Tác giả](#tác-giả)
 
@@ -173,6 +174,58 @@ dotnet publish -c Release
 # Frontend
 cd frontend
 npm run build
+```
+
+## Docker
+
+### Yêu cầu
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+### Chạy toàn bộ hệ thống với Docker
+
+```bash
+# Build và chạy tất cả services (database, backend, frontend)
+docker-compose up -d --build
+
+# Xem logs
+docker-compose logs -f
+
+# Dừng services
+docker-compose down
+```
+
+Sau khi chạy:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5066
+- Swagger: http://localhost:5066/swagger
+
+### Chạy chỉ database (development)
+
+```bash
+# Chỉ chạy SQL Server trong Docker, backend/frontend chạy local
+docker-compose -f docker-compose.dev.yml up -d
+```
+
+Connection string cho development:
+```
+Server=localhost;Database=KeyboardStore;User Id=sa;Password=KeyBoard@123456;TrustServerCertificate=True;
+```
+
+### Build từng service riêng
+
+```bash
+# Build backend image
+docker build -t keyboardstore-api ./backend/KeyBoard
+
+# Build frontend image
+docker build -t keyboardstore-web ./frontend
+
+# Chạy backend
+docker run -d -p 5066:8080 --name api keyboardstore-api
+
+# Chạy frontend
+docker run -d -p 3000:80 --name web keyboardstore-web
 ```
 
 ## API Documentation
